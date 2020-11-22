@@ -13,6 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".chapter5.Chapter51Activity"></activity>
+        <activity android:name=".chapter5.Chapter5Activity" />
         <activity android:name=".StartMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,8 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".chapter3.Chapter3Activity">
-        </activity>
+        <activity android:name=".chapter3.Chapter3Activity" />
     </application>
 
 </manifest>

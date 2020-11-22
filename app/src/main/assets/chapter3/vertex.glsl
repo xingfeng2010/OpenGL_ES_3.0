@@ -1,11 +1,11 @@
 #version 300 es
-uniform mat4 uMVPMatrix; //总变换矩阵
-layout (location = 0) in vec3 aPosition;  //顶点位置
-layout (location = 1) in vec4 aColor;    //顶点颜色
-out  vec4 vColor;  //用于传递给片元着色器的变量
+uniform mat4 uMVPMatrix; //锟杰变换锟斤拷锟斤拷
+layout (location = 0) in vec3 aPosition;  //锟斤拷锟斤拷位锟斤拷
+layout (location = 1) in vec4 aColor;    //锟斤拷锟斤拷锟斤拷色
+out vec4 vColor;  //锟斤拷锟节达拷锟捷革拷片元锟斤拷色锟斤拷锟侥憋拷锟斤拷
 
 void main()
 {
-   gl_Position = uMVPMatrix * vec4(aPosition,1); //根据总变换矩阵计算此次绘制此顶点位置
-   vColor = aColor;//将接收的颜色传递给片元着色器 
+   gl_Position = uMVPMatrix * vec4(aPosition,1); //锟斤拷锟斤拷锟杰变换锟斤拷锟斤拷锟斤拷锟剿次伙拷锟狡此讹拷锟斤拷位锟斤拷
+   vColor = aColor;//锟斤拷锟斤拷锟秸碉拷锟斤拷色锟斤拷锟捷革拷片元锟斤拷色锟斤拷 
 }
