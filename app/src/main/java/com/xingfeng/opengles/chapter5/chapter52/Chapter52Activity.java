@@ -1,11 +1,6 @@
-package com.xingfeng.opengles.chapter5.Chapter52;
+package com.xingfeng.opengles.chapter5.chapter52;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.xingfeng.opengles.GLRenderActivity;
 

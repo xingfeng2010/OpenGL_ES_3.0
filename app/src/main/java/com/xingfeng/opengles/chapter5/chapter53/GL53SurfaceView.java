@@ -1,4 +1,4 @@
-package com.xingfeng.opengles.chapter5.Chapter53;
+package com.xingfeng.opengles.chapter5.chapter53;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
@@ -6,7 +6,6 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 import android.opengl.GLES30;
 
-import com.xingfeng.opengles.util.Constant;
 import com.xingfeng.opengles.util.MatrixState;
 
 
@@ -47,9 +46,9 @@ public class GL53SurfaceView extends GLSurfaceView {
             //设置视口大小及位置
             GLES30.glViewport(0, 0, width, height);
             //计算视口的宽高比
-            Constant.ratio = (float) width / height;
+            CubeConstant.ratio = (float) width / height;
             // 调用此方法计算产生透视投影矩阵
-            MatrixState.setProjectFrustum(-Constant.ratio*0.8f, Constant.ratio*1.2f, -1, 1, 20, 100);
+            MatrixState.setProjectFrustum(-CubeConstant.ratio*0.8f, CubeConstant.ratio*1.2f, -1, 1, 20, 100);
             // 调用此方法产生摄像机矩阵
             MatrixState.setCamera(-16f, 8f, 45, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
 

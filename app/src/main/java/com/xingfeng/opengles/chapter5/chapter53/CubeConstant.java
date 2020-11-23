@@ -1,6 +1,6 @@
-package com.xingfeng.opengles.util;
+package com.xingfeng.opengles.chapter5.chapter53;
 
-public class Constant
+public class CubeConstant
 {
     //单位尺寸
     public static final float UNIT_SIZE=0.3f;

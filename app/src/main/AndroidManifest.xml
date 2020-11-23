@@ -13,8 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".chapter5.Chapter53.Chapter53Activity"></activity>
-        <activity android:name=".chapter5.Chapter52.Chapter52Activity" />
+
+        <activity android:name=".chapter5.chapter56.Chapter56Activity"/>
+        <activity android:name=".chapter5.chapter53.Chapter53Activity"/>
+        <activity android:name=".chapter5.chapter52.Chapter52Activity" />
         <activity android:name=".chapter5.chapter51.Chapter51Activity" />
         <activity android:name=".chapter5.Chapter5Activity" />
         <activity android:name=".StartMainActivity">

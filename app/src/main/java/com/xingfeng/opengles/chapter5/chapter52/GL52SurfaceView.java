@@ -1,4 +1,4 @@
-package com.xingfeng.opengles.chapter5.Chapter52;
+package com.xingfeng.opengles.chapter5.chapter52;
 
 import android.content.Context;
 import android.opengl.GLES30;
