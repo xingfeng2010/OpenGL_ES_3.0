@@ -124,9 +124,9 @@ public class SixPointedStar
     public void initShader(View mv)
     {
         //加载顶点着色器的脚本内容
-        mVertexShader= ShaderUtil.loadFromAssetsFile("chapter5/chapter5.1/vertex.sh", mv.getResources());
+        mVertexShader= ShaderUtil.loadFromAssetsFile("chapter5/chapter5.1/vertex.glsl", mv.getResources());
         //加载片元着色器的脚本内容
-        mFragmentShader=ShaderUtil.loadFromAssetsFile("chapter5/chapter5.1/frag.sh", mv.getResources());
+        mFragmentShader=ShaderUtil.loadFromAssetsFile("chapter5/chapter5.1/frag.glsl", mv.getResources());
         //基于顶点着色器与片元着色器创建程序
         mProgram = ShaderUtil.createProgram(mVertexShader, mFragmentShader);
         //获取程序中顶点位置属性引用id
@@ -151,7 +151,7 @@ public class SixPointedStar
         //设置绕x轴旋转xAngle度
         Matrix.rotateM(mMMatrix,0,xAngle,1,0,0);
         //将最终变换矩阵传入渲染管线
-        GLES30.glUniformMatrix4fv(muMVPMatrixHandle, 1, false, MatrixState.getFinalMatrix(), 0);
+        GLES30.glUniformMatrix4fv(muMVPMatrixHandle, 1, false, MatrixState.getFinalMatrix(mMMatrix), 0);
         //将顶点位置数据送入渲染管线
         GLES30.glVertexAttribPointer
                 (

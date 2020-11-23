@@ -111,6 +111,16 @@ public class MatrixState
         return mMVPMatrix;
     }
 
+    //获取具体物体的总变换矩阵
+    public static float[] getFinalMatrix(float[] spec)//生成物体总变换矩阵的方法
+    {
+        mMVPMatrix=new float[16];//创建用来存放最终变换矩阵的数组
+        Matrix.multiplyMM(mMVPMatrix, 0, mVMatrix, 0, spec, 0); //将摄像机矩阵乘以变换矩阵
+        //将投影矩阵乘以上一步的结果矩阵得到最终变换矩阵
+        Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mMVPMatrix, 0);
+        return mMVPMatrix;
+    }
+
     //获取具体物体的变换矩阵
     public static float[] getMMatrix()
     {

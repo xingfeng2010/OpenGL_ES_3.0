@@ -212,9 +212,9 @@ public class Cube {
 
     public void initShader(View mv) {
         //加载顶点着色器的脚本内容
-        mVertexShader= ShaderUtil.loadFromAssetsFile("chapter5/chapter5.1/vertex.sh", mv.getResources());
+        mVertexShader= ShaderUtil.loadFromAssetsFile("chapter5/chapter5.3/vertex.glsl", mv.getResources());
         //加载片元着色器的脚本内容
-        mFragmentShader=ShaderUtil.loadFromAssetsFile("chapter5/chapter5.1/frag.sh", mv.getResources());
+        mFragmentShader=ShaderUtil.loadFromAssetsFile("chapter5/chapter5.3/frag.glsl", mv.getResources());
         //基于顶点着色器与片元着色器创建程序
         mProgram = ShaderUtil.createProgram(mVertexShader, mFragmentShader);
         //获取程序中顶点位置属性引用id
@@ -230,6 +230,8 @@ public class Cube {
         GLES30.glUseProgram(mProgram);
         //将最终变换矩阵传入shader程序
         GLES30.glUniformMatrix4fv(muMVPMatrixHandle, 1, false, MatrixState.getFinalMatrix(), 0);
+        //为画笔指定顶点位置数据
+        GLES30.glVertexAttribPointer(maPositionHandle, 3, GLES30.GL_FLOAT, false, 3 * 4,mVertexBuffer);
         //为画笔指定顶点着色数据
         GLES30.glVertexAttribPointer(maColorHandle, 4, GLES30.GL_FLOAT, false, 4*4,mColorBuffer);
         GLES30.glEnableVertexAttribArray(maPositionHandle);
