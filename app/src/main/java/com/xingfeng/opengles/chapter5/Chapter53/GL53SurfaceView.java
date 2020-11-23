@@ -37,6 +37,8 @@ public class GL53SurfaceView extends GLSurfaceView {
             //绘制变换后的立方体
             MatrixState.pushMatrix();//保护现场
             MatrixState.translate(1f, 0, 0);//沿x方向平移3.5
+            MatrixState.rotate(30,0,0,1);
+            MatrixState.scale(2f, 0.4f, 0.6f);
             cube.drawSelf();//绘制立方体
             MatrixState.popMatrix();//恢复现场
         }

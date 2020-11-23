@@ -45,6 +45,15 @@ public class MatrixState
         Matrix.translateM(currMatrix, 0, x, y, z);
     }
 
+    //沿X、Y、Z轴方向进行旋转变换的方法
+    public static void rotate(float angle, float x, float y, float z) {// 设置绕xyz轴移动
+        Matrix.rotateM(currMatrix, 0, angle, x, y, z);
+    }
+
+    public static void scale(float x, float y, float z) {
+        Matrix.scaleM(currMatrix, 0, x, y, z);
+    }
+
     //设置摄像机
     static ByteBuffer llbb= ByteBuffer.allocateDirect(3*4);
     static float[] cameraLocation=new float[3];//摄像机位置
