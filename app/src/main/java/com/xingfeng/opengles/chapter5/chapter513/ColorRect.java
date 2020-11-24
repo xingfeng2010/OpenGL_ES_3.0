@@ -1,8 +1,4 @@
-package com.xingfeng.opengles.chapter5.chapter57;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
+package com.xingfeng.opengles.chapter5.chapter513;
 
 import android.opengl.GLES30;
 import android.view.View;
@@ -10,23 +6,27 @@ import android.view.View;
 import com.xingfeng.opengles.util.MatrixState;
 import com.xingfeng.opengles.util.ShaderUtil;
 
-//颜色条状物
-public class Belt
-{
-    private static final float UNIT_SIZE = 0.2f;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
 
+//颜色矩形
+public class ColorRect
+{
+    private final float UNIT_SIZE = 0.3f;
     int mProgram;//自定义渲染管线着色器程序id
     int muMVPMatrixHandle;//总变换矩阵引用
+    int muMMatrixHandle;//位置、旋转变换矩阵引用
     int maPositionHandle; //顶点位置属性引用
     int maColorHandle; //顶点颜色属性引用
     String mVertexShader;//顶点着色器代码脚本
     String mFragmentShader;//片元着色器代码脚本
 
-    FloatBuffer   mVertexBuffer;//顶点坐标数据缓冲
+    FloatBuffer mVertexBuffer;//顶点坐标数据缓冲
     FloatBuffer   mColorBuffer;//顶点着色数据缓冲
-    int vCount=0; //顶点数量
+    int vCount=0;
 
-    public Belt(View mv)
+    public ColorRect(View mv)
     {
         //初始化顶点坐标与着色数据
         initVertexData();
@@ -38,26 +38,17 @@ public class Belt
     public void initVertexData()
     {
         //顶点坐标数据的初始化================begin============================
-        int n = 6;
-        vCount=2*(n+1);
-        float angdegBegin = 0;
-        float angdegEnd = 180;
-        float angdegSpan = (angdegEnd-angdegBegin)/n;
+        vCount=6;
+        float vertices[]=new float[]
+                {
+                        0,0,0,
+                        UNIT_SIZE,UNIT_SIZE,0,
+                        -UNIT_SIZE,UNIT_SIZE,0,
+                        -UNIT_SIZE,-UNIT_SIZE,0,
+                        UNIT_SIZE,-UNIT_SIZE,0,
+                        UNIT_SIZE,UNIT_SIZE,0
+                };
 
-        float[] vertices=new float[vCount*3];//顶点坐标数据数组
-        //坐标数据初始化
-        int count=0;
-        for(float angdeg=angdegBegin; angdeg<=angdegEnd; angdeg+=angdegSpan) {
-            double angrad=Math.toRadians(angdeg);//当前弧度
-            //当前点
-            vertices[count++]=(float) (0.6f*UNIT_SIZE*Math.cos(angrad));//顶点x坐标
-            vertices[count++]=(float) (0.6f*UNIT_SIZE*Math.sin(angrad));//顶点y坐标
-            vertices[count++]=0;//顶点z坐标
-            //当前点
-            vertices[count++]=(float) (UNIT_SIZE*Math.cos(angrad));//顶点x坐标
-            vertices[count++]=(float) (UNIT_SIZE*Math.sin(angrad));//顶点y坐标
-            vertices[count++]=0;//顶点z坐标
-        }
         //创建顶点坐标数据缓冲
         //vertices.length*4是因为一个整数四个字节
         ByteBuffer vbb = ByteBuffer.allocateDirect(vertices.length*4);
@@ -69,21 +60,16 @@ public class Belt
         //转换，关键是要通过ByteOrder设置nativeOrder()，否则有可能会出问题
         //顶点坐标数据的初始化================end============================
 
-        //顶点颜色值数组，每个顶点4个色彩值RGBA
-        count = 0;
-        float colors[]=new float[vCount*4];
-        for(int i=0; i<colors.length; i+=8){
-            colors[count++] = 1;
-            colors[count++] = 1;
-            colors[count++] = 1;
-            colors[count++] = 0;
-
-            colors[count++] = 0;
-            colors[count++] = 1;
-            colors[count++] = 1;
-            colors[count++] = 0;
-        }
-
+        //顶点着色数据的初始化================begin============================
+        float colors[]=new float[]//顶点颜色值数组，每个顶点4个色彩值RGBA
+                {
+                        1,1,1,0,
+                        0,0,1,0,
+                        0,0,1,0,
+                        0,0,1,0,
+                        0,0,1,0,
+                        0,0,1,0,
+                };
         //创建顶点着色数据缓冲
         ByteBuffer cbb = ByteBuffer.allocateDirect(colors.length*4);
         cbb.order(ByteOrder.nativeOrder());//设置字节顺序
@@ -93,7 +79,9 @@ public class Belt
         //特别提示：由于不同平台字节顺序不同数据单元不是字节的一定要经过ByteBuffer
         //转换，关键是要通过ByteOrder设置nativeOrder()，否则有可能会出问题
         //顶点着色数据的初始化================end============================
+
     }
+
     //初始化着色器
     public void initShader(View mv)
     {
@@ -109,6 +97,8 @@ public class Belt
         maColorHandle= GLES30.glGetAttribLocation(mProgram, "aColor");
         //获取程序中总变换矩阵引用id
         muMVPMatrixHandle = GLES30.glGetUniformLocation(mProgram, "uMVPMatrix");
+        //获取位置、旋转变换矩阵引用id
+        muMMatrixHandle = GLES30.glGetUniformLocation(mProgram, "uMMatrix");
     }
 
     public void drawSelf()
@@ -117,7 +107,9 @@ public class Belt
         GLES30.glUseProgram(mProgram);
         //将最终变换矩阵传入渲染管线
         GLES30.glUniformMatrix4fv(muMVPMatrixHandle, 1, false, MatrixState.getFinalMatrix(), 0);
-        //将顶点位置数据送入渲染管线
+        //将平移、旋转变换矩阵传入渲染管线
+        GLES30.glUniformMatrix4fv(muMMatrixHandle, 1, false, MatrixState.getMMatrix(), 0);
+        //将顶点位置数据传入渲染管线
         GLES30.glVertexAttribPointer
                 (
                         maPositionHandle,
@@ -127,7 +119,7 @@ public class Belt
                         3*4,
                         mVertexBuffer
                 );
-        //将顶点颜色数据送入渲染管线
+        //将顶点颜色数据传入渲染管线
         GLES30.glVertexAttribPointer
                 (
                         maColorHandle,
@@ -141,7 +133,7 @@ public class Belt
         GLES30.glEnableVertexAttribArray(maPositionHandle);
         //启用顶点颜色数据数组
         GLES30.glEnableVertexAttribArray(maColorHandle);
-        //采用三角形条带方式绘制
-        GLES30.glDrawArrays(GLES30.GL_TRIANGLE_STRIP, 0 , vCount);
+        //绘制颜色矩形
+        GLES30.glDrawArrays(GLES30.GL_TRIANGLE_FAN, 0, vCount);
     }
 }

@@ -127,9 +127,9 @@ public class StripBelt
     public void initShader(View mv)
     {
         //加载顶点着色器的脚本内容
-        mVertexShader= ShaderUtil.loadFromAssetsFile("common_vertex.glsl", mv.getResources());
+        mVertexShader= ShaderUtil.loadFromAssetsFile("chapter5/chapter13/vertex.glsl", mv.getResources());
         //加载片元着色器的脚本内容
-        mFragmentShader=ShaderUtil.loadFromAssetsFile("common_frag.glsl", mv.getResources());
+        mFragmentShader=ShaderUtil.loadFromAssetsFile("chapter5/chapter13/frag.glsl", mv.getResources());
         //基于顶点着色器与片元着色器创建程序
         mProgram = ShaderUtil.createProgram(mVertexShader, mFragmentShader);
         //获取程序中顶点位置属性引用id

@@ -111,10 +111,10 @@ public class LayoutBelt {
     // 初始化着色器
     public void initShader(View mv) {
         // 加载顶点着色器的脚本内容
-        mVertexShader = ShaderUtil.loadFromAssetsFile("common_vertex.glsl",
+        mVertexShader = ShaderUtil.loadFromAssetsFile("chapter5/chapter13/vertex.glsl",
                 mv.getResources());
         // 加载片元着色器的脚本内容
-        mFragmentShader = ShaderUtil.loadFromAssetsFile("common_frag.glsl",
+        mFragmentShader = ShaderUtil.loadFromAssetsFile("chapter5/chapter13/frag.glsl",
                 mv.getResources());
         // 基于顶点着色器与片元着色器创建程序
         mProgram = ShaderUtil.createProgram(mVertexShader, mFragmentShader);
