@@ -9,6 +9,7 @@ import com.xingfeng.opengles.chapter5.chapter510.Chapter510Activity;
 import com.xingfeng.opengles.chapter5.chapter512.Chapter512Activity;
 import com.xingfeng.opengles.chapter5.chapter513.Chapter513Activity;
 import com.xingfeng.opengles.chapter5.chapter514.Chapter514Activity;
+import com.xingfeng.opengles.chapter5.chapter515.Chapter515Activity;
 import com.xingfeng.opengles.chapter5.chapter52.Chapter52Activity;
 import com.xingfeng.opengles.chapter5.chapter53.Chapter53Activity;
 import com.xingfeng.opengles.chapter5.chapter51.Chapter51Activity;
@@ -30,7 +31,8 @@ public class Chapter5Activity extends BaseListActivity {
             Chapter510Activity.class,
             Chapter512Activity.class,
             Chapter513Activity.class,
-            Chapter514Activity.class
+            Chapter514Activity.class,
+            Chapter515Activity.class
     };
 
 
@@ -45,7 +47,8 @@ public class Chapter5Activity extends BaseListActivity {
             "layout指定属性变量索引",
             "定点传入统一颜色值",
             "不同视角观察物体",
-            "合理透视参数效果影响"
+            "合理透视参数效果影响",
+            "多边形偏移"
     };
 
     @Override
