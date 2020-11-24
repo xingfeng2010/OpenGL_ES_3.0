@@ -6,6 +6,7 @@ import android.opengl.GLSurfaceView;
 import android.view.MotionEvent;
 
 import com.xingfeng.opengles.chapter5.chapter51.SixPointedStar;
+import com.xingfeng.opengles.util.Constant;
 import com.xingfeng.opengles.util.MatrixState;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -60,14 +61,14 @@ class GL513SurfaceView extends GLSurfaceView
 
             //绘制左侧立方体
             MatrixState.pushMatrix();
-            MatrixState.translate(-3, 0, 0);
+            MatrixState.translate(-0.5f, 0, 0);
             MatrixState.rotate(60, 0, 1, 0);
             cube.drawSelf();
             MatrixState.popMatrix();
 
             //绘制右侧立方体
             MatrixState.pushMatrix();
-            MatrixState.translate(1, 0, 0);
+            MatrixState.translate(0.5f, 0, 0);
             MatrixState.rotate(-60, 0, 1, 0);
             cube.drawSelf();
             MatrixState.popMatrix();
@@ -81,6 +82,7 @@ class GL513SurfaceView extends GLSurfaceView
             GLES30.glViewport(0, 0, width, height);
             //计算视口的宽高比
             float ratio= (float) width / height;
+            Constant.ratio = ratio;
             float param = 0.7f;
             //设置正交投影
             MatrixState.setProjectFrustum(-ratio * param, ratio * param, -1 * param

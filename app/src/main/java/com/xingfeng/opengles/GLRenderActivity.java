@@ -36,12 +36,16 @@ public class GLRenderActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mGLSurfaceView.onResume();
+        if (mGLSurfaceView != null) {
+            mGLSurfaceView.onResume();
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mGLSurfaceView.onPause();
+        if (mGLSurfaceView != null) {
+            mGLSurfaceView.onPause();
+        }
     }
 }
