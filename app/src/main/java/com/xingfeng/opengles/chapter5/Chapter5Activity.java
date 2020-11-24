@@ -11,6 +11,7 @@ import com.xingfeng.opengles.chapter5.chapter51.Chapter51Activity;
 import com.xingfeng.opengles.chapter5.chapter56.Chapter56Activity;
 import com.xingfeng.opengles.chapter5.chapter57.Chapter57Activity;
 import com.xingfeng.opengles.chapter5.chapter58.Chapter58Activity;
+import com.xingfeng.opengles.chapter5.chapter59.Chapter59Activity;
 
 public class Chapter5Activity extends BaseListActivity {
 
@@ -20,7 +21,8 @@ public class Chapter5Activity extends BaseListActivity {
             Chapter53Activity.class,
             Chapter56Activity.class,
             Chapter57Activity.class,
-            Chapter58Activity.class
+            Chapter58Activity.class,
+            Chapter59Activity.class
     };
 
 
@@ -30,7 +32,8 @@ public class Chapter5Activity extends BaseListActivity {
             "平移变换",
             "基本图形绘制",
             "三角形绘制",
-            "GL_TRIANGLE_STRIP绘制不连接版片断"
+            "GL_TRIANGLE_STRIP绘制不连接版片断",
+            "index结合DrawElements绘制圆"
     };
 
     @Override
