@@ -14,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <activity android:name=".chapter5.chapter58.Chapter58Activity"/>
         <activity android:name=".chapter5.chapter57.Chapter57Activity"/>
         <activity android:name=".chapter5.chapter56.Chapter56Activity"/>
         <activity android:name=".chapter5.chapter53.Chapter53Activity"/>

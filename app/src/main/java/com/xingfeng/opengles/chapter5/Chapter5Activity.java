@@ -10,6 +10,7 @@ import com.xingfeng.opengles.chapter5.chapter53.Chapter53Activity;
 import com.xingfeng.opengles.chapter5.chapter51.Chapter51Activity;
 import com.xingfeng.opengles.chapter5.chapter56.Chapter56Activity;
 import com.xingfeng.opengles.chapter5.chapter57.Chapter57Activity;
+import com.xingfeng.opengles.chapter5.chapter58.Chapter58Activity;
 
 public class Chapter5Activity extends BaseListActivity {
 
@@ -18,7 +19,8 @@ public class Chapter5Activity extends BaseListActivity {
             Chapter52Activity.class,
             Chapter53Activity.class,
             Chapter56Activity.class,
-            Chapter57Activity.class
+            Chapter57Activity.class,
+            Chapter58Activity.class
     };
 
 
@@ -27,7 +29,8 @@ public class Chapter5Activity extends BaseListActivity {
             "透视投影显示雪花",
             "平移变换",
             "基本图形绘制",
-            "三角形绘制"
+            "三角形绘制",
+            "GL_TRIANGLE_STRIP绘制不连接版片断"
     };
 
     @Override
