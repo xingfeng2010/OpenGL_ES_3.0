@@ -53,7 +53,7 @@ public class ViewCube {
         //绘制左大面
         MatrixState.pushMatrix();
         MatrixState.translate(UNIT_SIZE,0,0);
-        MatrixState.rotate(-90, 1, 0, 0);
+        //rotate不要连接使用，会改变坐标轴的方向，尽量只使用一次旋转
         MatrixState.rotate(90, 0, 1, 0);
         cr.drawSelf();
         MatrixState.popMatrix();
@@ -61,7 +61,6 @@ public class ViewCube {
         //绘制右大面
         MatrixState.pushMatrix();
         MatrixState.translate(-UNIT_SIZE,0,0);
-        MatrixState.rotate(90, 1, 0, 0);
         MatrixState.rotate(-90, 0, 1, 0);
         cr.drawSelf();
         MatrixState.popMatrix();
