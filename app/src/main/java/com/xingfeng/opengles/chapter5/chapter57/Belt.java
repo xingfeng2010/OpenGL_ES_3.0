@@ -40,8 +40,8 @@ public class Belt
         //顶点坐标数据的初始化================begin============================
         int n = 6;
         vCount=2*(n+1);
-        float angdegBegin = -90;
-        float angdegEnd = 90;
+        float angdegBegin = 0;
+        float angdegEnd = 180;
         float angdegSpan = (angdegEnd-angdegBegin)/n;
 
         float[] vertices=new float[vCount*3];//顶点坐标数据数组
@@ -50,12 +50,12 @@ public class Belt
         for(float angdeg=angdegBegin; angdeg<=angdegEnd; angdeg+=angdegSpan) {
             double angrad=Math.toRadians(angdeg);//当前弧度
             //当前点
-            vertices[count++]=(float) (-0.6f*UNIT_SIZE*Math.sin(angrad));//顶点x坐标
-            vertices[count++]=(float) (0.6f*UNIT_SIZE*Math.cos(angrad));//顶点y坐标
+            vertices[count++]=(float) (0.6f*UNIT_SIZE*Math.cos(angrad));//顶点x坐标
+            vertices[count++]=(float) (0.6f*UNIT_SIZE*Math.sin(angrad));//顶点y坐标
             vertices[count++]=0;//顶点z坐标
             //当前点
-            vertices[count++]=(float) (-UNIT_SIZE*Math.sin(angrad));//顶点x坐标
-            vertices[count++]=(float) (UNIT_SIZE*Math.cos(angrad));//顶点y坐标
+            vertices[count++]=(float) (UNIT_SIZE*Math.cos(angrad));//顶点x坐标
+            vertices[count++]=(float) (UNIT_SIZE*Math.sin(angrad));//顶点y坐标
             vertices[count++]=0;//顶点z坐标
         }
         //创建顶点坐标数据缓冲

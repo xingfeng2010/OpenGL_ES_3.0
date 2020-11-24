@@ -51,8 +51,8 @@ public class Circle
         for(float angdeg=0; Math.ceil(angdeg)<=360; angdeg+=angdegSpan) {//循环生成其他顶点的坐标
             double angrad=Math.toRadians(angdeg);//当前弧度
             //当前点
-            vertices[count++]=(float) (-UNIT_SIZE*Math.sin(angrad));//顶点x坐标
-            vertices[count++]=(float) (UNIT_SIZE*Math.cos(angrad));//顶点y坐标
+            vertices[count++]=(float) (UNIT_SIZE*Math.cos(angrad));//顶点x坐标
+            vertices[count++]=(float) (UNIT_SIZE*Math.sin(angrad));//顶点y坐标
             vertices[count++]=0;//顶点z坐标
         }
         //创建顶点坐标数据缓冲
