@@ -6,6 +6,7 @@ import android.widget.ListView;
 
 import com.xingfeng.opengles.BaseListActivity;
 import com.xingfeng.opengles.chapter5.chapter510.Chapter510Activity;
+import com.xingfeng.opengles.chapter5.chapter512.Chapter512Activity;
 import com.xingfeng.opengles.chapter5.chapter52.Chapter52Activity;
 import com.xingfeng.opengles.chapter5.chapter53.Chapter53Activity;
 import com.xingfeng.opengles.chapter5.chapter51.Chapter51Activity;
@@ -24,7 +25,8 @@ public class Chapter5Activity extends BaseListActivity {
             Chapter57Activity.class,
             Chapter58Activity.class,
             Chapter59Activity.class,
-            Chapter510Activity.class
+            Chapter510Activity.class,
+            Chapter512Activity.class
     };
 
 
@@ -36,7 +38,8 @@ public class Chapter5Activity extends BaseListActivity {
             "三角形绘制",
             "GL_TRIANGLE_STRIP绘制不连接版片断",
             "index结合DrawElements绘制圆",
-            "layout指定属性变量索引"
+            "layout指定属性变量索引",
+            "定点传入统一颜色值"
     };
 
     @Override
