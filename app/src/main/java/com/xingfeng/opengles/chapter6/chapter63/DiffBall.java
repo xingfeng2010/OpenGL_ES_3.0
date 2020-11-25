@@ -19,8 +19,12 @@ import java.util.ArrayList;
 public class DiffBall {
     int mProgram;// 自定义渲染管线着色器程序id
     int muMVPMatrixHandle;//总变换矩阵引用
+    int muMMatrixHandle;//位置、旋转变换矩阵引用
     int maPositionHandle; //顶点位置属性引用
     int muRHandle;//球的半径属性引用
+    int maNormalHandle;//顶点法向量属性引用
+    int maLightLocationHandle;//光源位置属性引用
+
     String mVertexShader;//顶点着色器代码脚本
     String mFragmentShader;//片元着色器代码脚本
 
@@ -136,17 +140,22 @@ public class DiffBall {
     // 初始化着色器
     public void initShader(View mv) {
         // 加载顶点着色器的脚本内容
-        mVertexShader = ShaderUtil.loadFromAssetsFile("chapter6/chapter6.2/vertex.glsl",mv.getResources());
+        mVertexShader = ShaderUtil.loadFromAssetsFile("chapter6/chapter6.3/vertex.glsl",mv.getResources());
         // 加载片元着色器的脚本内容
-        mFragmentShader = ShaderUtil.loadFromAssetsFile("chapter6/chapter6.2/frag.glsl",mv.getResources());
+        mFragmentShader = ShaderUtil.loadFromAssetsFile("chapter6/chapter6.3/frag.glsl",mv.getResources());
         // 基于顶点着色器与片元着色器创建程序
         mProgram = ShaderUtil.createProgram(mVertexShader, mFragmentShader);
         // 获取程序中顶点位置属性引用
         maPositionHandle = GLES30.glGetAttribLocation(mProgram, "aPosition");
         // 获取程序中总变换矩阵引用
         muMVPMatrixHandle = GLES30.glGetUniformLocation(mProgram, "uMVPMatrix");
+        muMMatrixHandle = GLES30.glGetUniformLocation(mProgram, "uMMatrix");
         // 获取程序中球半径引用
         muRHandle = GLES30.glGetUniformLocation(mProgram, "uR");
+
+        maNormalHandle = GLES30.glGetAttribLocation(mProgram, "aNormal");
+
+        maLightLocationHandle = GLES30.glGetUniformLocation(mProgram, "uLightLocation");
     }
     @TargetApi(Build.VERSION_CODES.FROYO)
     @SuppressLint("NewApi")
@@ -160,19 +169,22 @@ public class DiffBall {
         // 将最终变换矩阵传入渲染管线
         GLES30.glUniformMatrix4fv(muMVPMatrixHandle, 1, false,
                 MatrixState.getFinalMatrix(), 0);
+        // 将最终变换矩阵传入渲染管线
+        GLES30.glUniformMatrix4fv(muMMatrixHandle, 1, false,
+                MatrixState.getMMatrix(), 0);
         // 将半径尺寸传入渲染管线
         GLES30.glUniform1f(muRHandle, r * UNIT_SIZE);
+        // 将光源位置传入渲染管线
+        GLES30.glUniform3fv(maLightLocationHandle,1, MatrixState.lightPositionFB);
+
         //将顶点位置数据送入渲染管线
         GLES30.glVertexAttribPointer(maPositionHandle, 3, GLES30.GL_FLOAT,
                 false, 3 * 4, mVertexBuffer);
+        GLES30.glVertexAttribPointer(maNormalHandle,3,GLES30.GL_FLOAT, false,3*4,mNormalBuffer);
         //启用顶点位置数据数组
         GLES30.glEnableVertexAttribArray(maPositionHandle);
+        GLES30.glEnableVertexAttribArray(maNormalHandle);
         //绘制球
         GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, vCount);
-    }
-
-    private float lightOffset = 4;
-    public void setLightOffset(float lightOffset) {
-        this.lightOffset = lightOffset;
     }
 }

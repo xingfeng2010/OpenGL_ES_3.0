@@ -19,7 +19,7 @@ class GL63SurfaceView extends GLSurfaceView
 
     private float mPreviousY;//上次的触控位置Y坐标
     private float mPreviousX;//上次的触控位置X坐标
-    private float lightOffset = 4;
+    private float lightOffset = 2;
 
     public GL63SurfaceView(Context context) {
         super(context);
@@ -51,6 +51,9 @@ class GL63SurfaceView extends GLSurfaceView
         {
             //清除深度缓冲与颜色缓冲
             GLES30.glClear( GLES30.GL_DEPTH_BUFFER_BIT | GLES30.GL_COLOR_BUFFER_BIT);
+            //设置光源位置
+            MatrixState.setLightLocation(lightOffset, 0, 1.5f);
+
             //保护现场
             MatrixState.pushMatrix();
 
@@ -97,6 +100,5 @@ class GL63SurfaceView extends GLSurfaceView
 
     public void setLightOffset(float lightOffset) {
         this.lightOffset = lightOffset;
-        ball.setLightOffset(lightOffset);
     }
 }
