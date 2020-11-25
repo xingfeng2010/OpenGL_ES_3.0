@@ -1,6 +1,9 @@
 package com.xingfeng.opengles.util;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+
 import android.opengl.Matrix;
 
 //管理系统矩阵状态的类
@@ -12,6 +15,25 @@ public class MatrixState
 
     static float[][] mStack=new float[10][16];//用于保存变换矩阵的栈
     static int stackTop=-1;//栈顶索引
+
+    //光源位置数据
+    public static float[] lightLocation = new float[]{0,0,3};
+    //光源位置的缓冲
+    public static FloatBuffer lightPositionFB;
+    //待用的字节缓冲
+    static ByteBuffer toUseBF = ByteBuffer.allocateDirect(3*4);
+
+    public static void setLightLocation(float x, float y, float z) {
+        toUseBF.clear();
+        lightLocation[0] = x;
+        lightLocation[1] = y;
+        lightLocation[2] = z;
+
+        toUseBF.order(ByteOrder.nativeOrder());
+        lightPositionFB = toUseBF.asFloatBuffer();
+        lightPositionFB.put(lightLocation);
+        lightPositionFB.position(0);
+    }
 
     //产生无任何变换的初始矩阵
     public static void setInitStack()
