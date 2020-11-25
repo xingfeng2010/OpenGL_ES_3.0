@@ -15,16 +15,19 @@ import android.widget.TextView;
 
 import com.xingfeng.opengles.chapter3.Chapter3Activity;
 import com.xingfeng.opengles.chapter5.Chapter5Activity;
+import com.xingfeng.opengles.chapter6.Chapter6Activity;
 
 public class StartMainActivity extends BaseListActivity{
     protected Class[] classes = new Class[] {
             Chapter3Activity.class,
-            Chapter5Activity.class
+            Chapter5Activity.class,
+            Chapter6Activity.class
     };
 
     protected String[] classDescription = new String[] {
-            "Chapter3",
-            "Chapter5"
+            "OPENGL ES 3.0基础知识",
+            "必知必会3D开发",
+            "光照"
     };
 
 
