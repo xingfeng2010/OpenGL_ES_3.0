@@ -19,20 +19,23 @@ import com.xingfeng.opengles.chapter5.chapter59.Chapter59Activity;
 import com.xingfeng.opengles.chapter6.chapter61.Chapter61Activity;
 import com.xingfeng.opengles.chapter6.chapter62.Chapter62Activity;
 import com.xingfeng.opengles.chapter6.chapter63.Chapter63Activity;
+import com.xingfeng.opengles.chapter6.chapter64.Chapter64Activity;
 
 public class Chapter6Activity extends BaseListActivity {
 
     private Class[] classes = new Class[] {
             Chapter61Activity.class,
             Chapter62Activity.class,
-            Chapter63Activity.class
+            Chapter63Activity.class,
+            Chapter64Activity.class
     };
 
 
     private String[] classDescription = new String[] {
             "曲面物体的构建",
             "基本光照-环境光",
-            "基本光照-散射光"
+            "基本光照-散射光",
+            "基本光照-镜面光"
     };
 
     @Override

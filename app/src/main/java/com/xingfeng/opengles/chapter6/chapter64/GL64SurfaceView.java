@@ -1,4 +1,4 @@
-package com.xingfeng.opengles.chapter6.chapter62;
+package com.xingfeng.opengles.chapter6.chapter64;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -6,23 +6,24 @@ import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
 import android.view.MotionEvent;
 
+import com.xingfeng.opengles.chapter6.chapter63.DiffBall;
 import com.xingfeng.opengles.util.Constant;
 import com.xingfeng.opengles.util.MatrixState;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-class GL62SurfaceView extends GLSurfaceView
+class GL64SurfaceView extends GLSurfaceView
 {
     private final float TOUCH_SCALE_FACTOR = 180.0f/320;//角度缩放比例
     private SceneRenderer mRenderer;//场景渲染器
-    LightBall ball;//球
+    DiffBall ball;//球
 
     private float mPreviousY;//上次的触控位置Y坐标
     private float mPreviousX;//上次的触控位置X坐标
-    private float lightOffset = 4;
+    private float lightOffset = 2;
 
-    public GL62SurfaceView(Context context) {
+    public GL64SurfaceView(Context context) {
         super(context);
         this.setEGLContextClientVersion(3); //设置使用OPENGL ES3.0
         mRenderer = new SceneRenderer();	//创建场景渲染器
@@ -46,12 +47,15 @@ class GL62SurfaceView extends GLSurfaceView
         return true;
     }
     @SuppressLint("NewApi")
-    private class SceneRenderer implements GLSurfaceView.Renderer
+    private class SceneRenderer implements Renderer
     {
         public void onDrawFrame(GL10 gl)
         {
             //清除深度缓冲与颜色缓冲
             GLES30.glClear( GLES30.GL_DEPTH_BUFFER_BIT | GLES30.GL_COLOR_BUFFER_BIT);
+            //设置光源位置
+            MatrixState.setLightLocation(lightOffset, 0, 1.5f);
+
             //保护现场
             MatrixState.pushMatrix();
 
@@ -88,7 +92,7 @@ class GL62SurfaceView extends GLSurfaceView
             //设置屏幕背景色RGBA
             GLES30.glClearColor(0f,0f,0f, 1.0f);
             //创建球对象
-            ball=new LightBall(GL62SurfaceView.this);
+            ball=new DiffBall(GL64SurfaceView.this);
             //打开深度检测
             GLES30.glEnable(GLES30.GL_DEPTH_TEST);
             //打开背面剪裁

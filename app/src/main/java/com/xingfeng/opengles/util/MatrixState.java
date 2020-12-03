@@ -78,7 +78,8 @@ public class MatrixState
 
     //设置摄像机
     static ByteBuffer llbb= ByteBuffer.allocateDirect(3*4);
-    static float[] cameraLocation=new float[3];//摄像机位置
+    public static FloatBuffer cameraFB;
+    static float[] cameraLocation = new float[3];//摄像机位置
     //设置摄像机的方法
     public static void setCamera
     (
@@ -101,6 +102,12 @@ public class MatrixState
                         tx,ty,tz,	//观察目标点X、Y、Z坐标
                         upx,upy,upz	//up向量在X、Y、Z轴上的分量
                 );
+        cameraLocation[0] = cx;cameraLocation[1] = cy;cameraLocation[2] = cz;
+        llbb.clear();
+        llbb.order(ByteOrder.nativeOrder());
+        cameraFB = llbb.asFloatBuffer();
+        cameraFB.put(cameraLocation);
+        cameraFB.position(0);
     }
 
     //设置透视投影参数
