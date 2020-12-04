@@ -23,6 +23,21 @@ public class MatrixState
     //待用的字节缓冲
     static ByteBuffer toUseBF = ByteBuffer.allocateDirect(3*4);
 
+    //定向光方向向量数组
+    public static float[] lightDirection = new float[]{0, 0 , 1};
+    public static FloatBuffer lightDirectionFB;
+    public static void setLightDirection(float x, float y, float z) {
+        toUseBF.clear();
+        lightDirection[0] = x;
+        lightDirection[1] = y;
+        lightDirection[2] = z;
+
+        toUseBF.order(ByteOrder.nativeOrder());
+        lightDirectionFB = toUseBF.asFloatBuffer();
+        lightDirectionFB.put(lightDirection);
+        lightDirectionFB.position(0);
+    }
+
     public static void setLightLocation(float x, float y, float z) {
         toUseBF.clear();
         lightLocation[0] = x;
