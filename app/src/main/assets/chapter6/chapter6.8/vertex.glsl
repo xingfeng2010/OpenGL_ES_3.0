@@ -6,9 +6,9 @@ uniform vec3 uCamera;	//摄像机位置
 in vec3 aPosition;  //顶点位置
 in vec3 aNormal;    //法向量
 out vec3 vPosition;//用于传递给片元着色器的顶点位置
-out vec4 vAmbient;//用于传递给片元着色器的环境光分量
-out vec4 vDiffuse;//用于传递给片元着色器的散射光分量
-out vec4 vSpecular;//用于传递给片元着色器的镜面反射光分量
+out vec4 vAmbient;//用于传递给片元着色器的环境光最终强度
+out vec4 vDiffuse;//用于传递给片元着色器的散射光最终强度
+out vec4 vSpecular;//用于传递给片元着色器的镜面反射光最终强度
 //定位光光照计算的方法
 void pointLight(					//定位光光照计算的方法
 in vec3 normal,				//法向量

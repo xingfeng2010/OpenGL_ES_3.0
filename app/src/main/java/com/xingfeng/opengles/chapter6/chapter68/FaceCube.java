@@ -33,11 +33,11 @@ public class FaceCube {
     float yAngle = 0;// 绕y轴旋转的角度
     float xAngle = 0;// 绕x轴旋转的角度
     float zAngle = 0;// 绕z轴旋转的角度
-    float r = 1.0f;//若有手机出现条纹可改成0.99999原值为1
+    float r = 1.0f;
     public FaceCube(View mv) {
-        // 调用初始化顶点数据的方法
+        //调用初始化顶点数据的方法
         initVertexData();
-        // 调用初始化着色器的方法
+        //调用初始化着色器的方法
         initShader(mv);
     }
 
@@ -45,11 +45,11 @@ public class FaceCube {
     public void initVertexData() {
 
         //顶点坐标数据的初始化================begin============================
-        vCount=6*6;//顶点数
+        vCount=6*6; //顶点数
 
         float vertices[]=new float[]
                 {
-                        //立方体前面
+                        //前面
                         UNIT_SIZE,UNIT_SIZE,UNIT_SIZE, //0
                         -UNIT_SIZE,UNIT_SIZE,UNIT_SIZE,//1
                         -UNIT_SIZE,-UNIT_SIZE,UNIT_SIZE, //2
@@ -109,26 +109,7 @@ public class FaceCube {
         // 特别提示：由于不同平台字节顺序不同数据单元不是字节的一定要经过ByteBuffer
         // 转换，关键是要通过ByteOrder设置nativeOrder()，否则有可能会出问题
 
-        float normals[]=new float[]{
-                //前面
-                0,0,1, 0,0,1, 0,0,1,
-                0,0,1, 0,0,1, 0,0,1,
-                //后面
-                0,0,-1, 0,0,-1, 0,0,-1,
-                0,0,-1, 0,0,-1, 0,0,-1,
-                //左面
-                -1,0,0, -1,0,0, -1,0,0,
-                -1,0,0, -1,0,0, -1,0,0,
-                //右面
-                1,0,0, 1,0,0, 1,0,0,
-                1,0,0, 1,0,0, 1,0,0,
-                //上面
-                0,1,0, 0,1,0, 0,1,0,
-                0,1,0, 0,1,0, 0,1,0,
-                //下面
-                0,-1,0, 0,-1,0, 0,-1,0,
-                0,-1,0, 0,-1,0, 0,-1,0,
-        };
+        float normals[]=vertices;
         //创建绘制顶点法向量缓冲
         ByteBuffer nbb = ByteBuffer.allocateDirect(normals.length*4);
         nbb.order(ByteOrder.nativeOrder());//设置字节顺序
@@ -137,7 +118,7 @@ public class FaceCube {
         mNormalBuffer.position(0);//设置缓冲区起始位置
     }
 
-    // 初始化着色器
+    //初始化着色器
     public void initShader(View mv) {
         // 加载顶点着色器的脚本内容
         mVertexShader = ShaderUtil.loadFromAssetsFile("chapter6/chapter6.7/vertex.glsl",
