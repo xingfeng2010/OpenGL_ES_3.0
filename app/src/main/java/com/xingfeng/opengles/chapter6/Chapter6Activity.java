@@ -20,6 +20,7 @@ import com.xingfeng.opengles.chapter6.chapter61.Chapter61Activity;
 import com.xingfeng.opengles.chapter6.chapter62.Chapter62Activity;
 import com.xingfeng.opengles.chapter6.chapter63.Chapter63Activity;
 import com.xingfeng.opengles.chapter6.chapter64.Chapter64Activity;
+import com.xingfeng.opengles.chapter6.chapter65.Chapter65Activity;
 
 public class Chapter6Activity extends BaseListActivity {
 
@@ -27,7 +28,8 @@ public class Chapter6Activity extends BaseListActivity {
             Chapter61Activity.class,
             Chapter62Activity.class,
             Chapter63Activity.class,
-            Chapter64Activity.class
+            Chapter64Activity.class,
+            Chapter65Activity.class
     };
 
 
@@ -35,7 +37,8 @@ public class Chapter6Activity extends BaseListActivity {
             "曲面物体的构建",
             "基本光照-环境光",
             "基本光照-散射光",
-            "基本光照-镜面光"
+            "基本光照-镜面光",
+            "基本光照-三种光叠加",
     };
 
     @Override
