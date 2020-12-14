@@ -24,6 +24,7 @@ import com.xingfeng.opengles.chapter6.chapter65.Chapter65Activity;
 import com.xingfeng.opengles.chapter6.chapter66.Chapter66Activity;
 import com.xingfeng.opengles.chapter6.chapter67.Chapter67Activity;
 import com.xingfeng.opengles.chapter6.chapter68.Chapter68Activity;
+import com.xingfeng.opengles.chapter6.chapter69.Chapter69Activity;
 
 public class Chapter6Activity extends BaseListActivity {
 
@@ -35,7 +36,8 @@ public class Chapter6Activity extends BaseListActivity {
             Chapter65Activity.class,
             Chapter66Activity.class,
             Chapter67Activity.class,
-            Chapter68Activity.class
+            Chapter68Activity.class,
+            Chapter69Activity.class
     };
 
 
@@ -47,7 +49,8 @@ public class Chapter6Activity extends BaseListActivity {
             "基本光照-三种光叠加",
             "光照-定向光",
             "光照-点法向量",
-            "光照-面法向量"
+            "光照-面法向量",
+            "光照-片元计算"
     };
 
     @Override
