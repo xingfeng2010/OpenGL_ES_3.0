@@ -1,4 +1,4 @@
-package com.xingfeng.opengles.chapter7.chapter71;
+package com.xingfeng.opengles.chapter7.chapter72;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -10,6 +10,7 @@ import android.opengl.GLUtils;
 import android.view.MotionEvent;
 
 import com.xingfeng.opengles.R;
+import com.xingfeng.opengles.chapter7.chapter71.TextureTriangle;
 import com.xingfeng.opengles.util.MatrixState;
 
 import java.io.IOException;
@@ -18,7 +19,7 @@ import java.io.InputStream;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-public class GL71SurfaceView extends GLSurfaceView {
+public class GL72SurfaceView extends GLSurfaceView {
     private final float TOUCH_SCALE_FACTOR = 180.0f/320;//角度缩放比例
     private SceneRenderer mRenderer;//场景渲染器
 
@@ -27,7 +28,7 @@ public class GL71SurfaceView extends GLSurfaceView {
 
     int textureId;//系统分配的纹理id
 
-    public GL71SurfaceView(Context context) {
+    public GL72SurfaceView(Context context) {
         super(context);
         this.setEGLContextClientVersion(3);	//设置使用OPENGL ES3.0
         mRenderer = new SceneRenderer();	//创建场景渲染器
@@ -81,7 +82,7 @@ public class GL71SurfaceView extends GLSurfaceView {
             //设置屏幕背景色RGBA
             GLES30.glClearColor(0.5f,0.5f,0.5f, 1.0f);
             //创建三角形对对象
-            texRect=new TextureTriangle(GL71SurfaceView.this);
+            texRect=new TextureTriangle(GL72SurfaceView.this);
             //打开深度检测
             GLES30.glEnable(GLES30.GL_DEPTH_TEST);
             //初始化纹理
@@ -105,8 +106,12 @@ public class GL71SurfaceView extends GLSurfaceView {
         GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, textureId);
         GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_MIN_FILTER,GLES30.GL_NEAREST);
         GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D,GLES30.GL_TEXTURE_MAG_FILTER,GLES30.GL_LINEAR);
+
         GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_WRAP_S,GLES30.GL_CLAMP_TO_EDGE);
         GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_WRAP_T,GLES30.GL_CLAMP_TO_EDGE);
+        //需要将纹理图中绿色通道的值映射到着色器中采样器的红色通道
+        GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_SWIZZLE_R,GLES30.GL_GREEN);
+
         //通过输入流加载图片===============begin===================
         Bitmap bitmapTmp;
         bitmapTmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.wall);

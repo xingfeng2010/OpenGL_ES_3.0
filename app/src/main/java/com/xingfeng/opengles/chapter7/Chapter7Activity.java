@@ -13,16 +13,19 @@ import com.xingfeng.opengles.chapter6.chapter67.Chapter67Activity;
 import com.xingfeng.opengles.chapter6.chapter68.Chapter68Activity;
 import com.xingfeng.opengles.chapter6.chapter69.Chapter69Activity;
 import com.xingfeng.opengles.chapter7.chapter71.Chapter71Activity;
+import com.xingfeng.opengles.chapter7.chapter72.Chapter72Activity;
 
 public class Chapter7Activity extends BaseListActivity {
 
     private Class[] classes = new Class[] {
-            Chapter71Activity.class
+            Chapter71Activity.class,
+            Chapter72Activity.class
     };
 
 
     private String[] classDescription = new String[] {
-            "纹理映射--简单案例"
+            "纹理映射--简单案例",
+            "纹理映射--色彩通道组合"
     };
 
     @Override

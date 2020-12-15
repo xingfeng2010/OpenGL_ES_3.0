@@ -22,9 +22,9 @@ public class TextureTriangle {
     FloatBuffer mVertexBuffer;//顶点坐标数据缓冲
     FloatBuffer mTexCoorBuffer;//顶点纹理坐标数据缓冲
     int vCount = 0;
-    float xAngle = 0;//绕x轴旋转的角度
-    float yAngle = 0;//绕y轴旋转的角度
-    float zAngle = 0;//绕z轴旋转的角度
+    public float xAngle = 0;//绕x轴旋转的角度
+    public float yAngle = 0;//绕y轴旋转的角度
+    public float zAngle = 0;//绕z轴旋转的角度
 
     public TextureTriangle(View mv) {
         //初始化顶点数据的方法
