@@ -1,4 +1,4 @@
-package com.xingfeng.opengles.chapter7.chapter72;
+package com.xingfeng.opengles.chapter7.chapter73;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -19,16 +19,28 @@ import java.io.InputStream;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-public class GL72SurfaceView extends GLSurfaceView {
+public class GL73SurfaceView extends GLSurfaceView {
     private final float TOUCH_SCALE_FACTOR = 180.0f/320;//角度缩放比例
     private SceneRenderer mRenderer;//场景渲染器
 
     private float mPreviousY;//上次的触控位置Y坐标
     private float mPreviousX;//上次的触控位置X坐标
 
-    int textureId;//系统分配的纹理id
+    //系统分配的拉伸纹理id
+    int textureCTId;
+    //系统分配的重复纹理id
+    int textureREId;
+    //系统分配的镜像纹理id
+    int textureMIId;
 
-    public GL72SurfaceView(Context context) {
+    public int currTextureId;//当前纹理id
+
+    TextureRect[] texRect = new TextureRect[3];//纹理三角形对象引用
+    //当前纹理矩形索引
+    int trIndex = 2;
+
+
+    public GL73SurfaceView(Context context) {
         super(context);
         this.setEGLContextClientVersion(3);	//设置使用OPENGL ES3.0
         mRenderer = new SceneRenderer();	//创建场景渲染器
@@ -47,8 +59,10 @@ public class GL72SurfaceView extends GLSurfaceView {
             case MotionEvent.ACTION_MOVE:
                 float dy = y - mPreviousY;//计算触控笔Y位移
                 float dx = x - mPreviousX;//计算触控笔X位移
-                mRenderer.texRect.yAngle += dx * TOUCH_SCALE_FACTOR;//设置纹理矩形绕y轴旋转角度
-                mRenderer.texRect.zAngle+= dy * TOUCH_SCALE_FACTOR;//设置第纹理矩形绕z轴旋转角度
+                for (TextureRect textureTriangle:texRect) {
+                    textureTriangle.yAngle += dx * TOUCH_SCALE_FACTOR;//设置纹理矩形绕y轴旋转角度
+                    textureTriangle.zAngle+= dy * TOUCH_SCALE_FACTOR;//设置第纹理矩形绕z轴旋转角度
+                }
         }
         mPreviousY = y;//记录触控笔位置
         mPreviousX = x;//记录触控笔位置
@@ -57,14 +71,12 @@ public class GL72SurfaceView extends GLSurfaceView {
 
     private class SceneRenderer implements GLSurfaceView.Renderer
     {
-        TextureTriangle texRect;//纹理三角形对象引用
-
         public void onDrawFrame(GL10 gl)
         {
             //清除深度缓冲与颜色缓冲
             GLES30.glClear( GLES30.GL_DEPTH_BUFFER_BIT | GLES30.GL_COLOR_BUFFER_BIT);
             //绘制纹理三角形
-            texRect.drawSelf(textureId);
+            texRect[trIndex].drawSelf(currTextureId);
         }
 
         public void onSurfaceChanged(GL10 gl, int width, int height) {
@@ -81,18 +93,22 @@ public class GL72SurfaceView extends GLSurfaceView {
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
             //设置屏幕背景色RGBA
             GLES30.glClearColor(0.5f,0.5f,0.5f, 1.0f);
-            //创建三角形对对象
-            texRect=new TextureTriangle(GL72SurfaceView.this);
+            texRect[0] = new TextureRect(GL73SurfaceView.this, 1, 1);
+            texRect[1] = new TextureRect(GL73SurfaceView.this, 4, 2);
+            texRect[2] = new TextureRect(GL73SurfaceView.this, 4, 4);
             //打开深度检测
             GLES30.glEnable(GLES30.GL_DEPTH_TEST);
             //初始化纹理
-            initTexture();
+            textureCTId = initTexture(1);
+            textureREId = initTexture(0);
+            textureMIId = initTexture(2);
+            currTextureId = textureREId;
             //关闭背面剪裁
             GLES30.glDisable(GLES30.GL_CULL_FACE);
         }
     }
 
-    public void initTexture()//textureId
+    public int initTexture(int index)//textureId
     {
         //生成纹理ID
         int[] textures = new int[1];
@@ -102,19 +118,29 @@ public class GL72SurfaceView extends GLSurfaceView {
                         textures,   //纹理id的数组
                         0           //偏移量
                 );
-        textureId=textures[0];
+        int textureId=textures[0];
         GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, textureId);
         GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_MIN_FILTER,GLES30.GL_NEAREST);
         GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D,GLES30.GL_TEXTURE_MAG_FILTER,GLES30.GL_LINEAR);
 
-        GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_WRAP_S,GLES30.GL_REPEAT);
-        GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_WRAP_T,GLES30.GL_REPEAT);
-        //需要将纹理图中绿色通道的值映射到着色器中采样器的红色通道
-        GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_SWIZZLE_R,GLES30.GL_GREEN);
+        switch (index) {
+            case 0:
+                GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_WRAP_S,GLES30.GL_REPEAT);
+                GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_WRAP_T,GLES30.GL_REPEAT);
+                break;
+            case 1:
+                GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_WRAP_S,GLES30.GL_CLAMP_TO_EDGE);
+                GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_WRAP_T,GLES30.GL_CLAMP_TO_EDGE);
+                break;
+            case 2:
+                GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_WRAP_S,GLES30.GL_MIRRORED_REPEAT);
+                GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_WRAP_T,GLES30.GL_MIRRORED_REPEAT);
+                break;
+        }
 
         //通过输入流加载图片===============begin===================
         Bitmap bitmapTmp;
-        bitmapTmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.wall);
+        bitmapTmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.robot);
         //通过输入流加载图片===============end=====================
 
         //实际加载纹理进显存
@@ -126,5 +152,7 @@ public class GL72SurfaceView extends GLSurfaceView {
                         0					  //纹理边框尺寸
                 );
         bitmapTmp.recycle(); 		  //纹理加载成功后释放内存中的纹理图
+
+        return textureId;
     }
 }

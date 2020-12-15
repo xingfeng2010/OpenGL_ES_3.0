@@ -1,23 +1,25 @@
-package com.xingfeng.opengles.chapter7.chapter71;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
+package com.xingfeng.opengles.chapter7.chapter73;
 
 import android.opengl.GLES30;
+import android.opengl.Matrix;
 import android.view.View;
 
 import com.xingfeng.opengles.util.MatrixState;
 import com.xingfeng.opengles.util.ShaderUtil;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+
 //纹理三角形
-public class TextureTriangle {
+public class TextureRect {
     int mProgram;//自定义渲染管线程序id
     int muMVPMatrixHandle;//总变换矩阵引用
     int maPositionHandle; //顶点位置属性引用
     int maTexCoorHandle; //顶点纹理坐标属性引用
     String mVertexShader;//顶点着色器代码脚本
     String mFragmentShader;//片元着色器代码脚本
+    static float[] mMMatrix = new float[16];
 
     FloatBuffer mVertexBuffer;//顶点坐标数据缓冲
     FloatBuffer mTexCoorBuffer;//顶点纹理坐标数据缓冲
@@ -26,7 +28,13 @@ public class TextureTriangle {
     public float yAngle = 0;//绕y轴旋转的角度
     public float zAngle = 0;//绕z轴旋转的角度
 
-    public TextureTriangle(View mv) {
+    float sRange;//s纹理坐标范围
+    float tRange;//t纹理坐标范围
+
+    public TextureRect(View mv, float sRange, float tRange) {
+        this.sRange = sRange;
+        this.tRange = tRange;
+
         //初始化顶点数据的方法
         initVertexData();
         //初始化着色器的方法
@@ -36,13 +44,17 @@ public class TextureTriangle {
     //初始化顶点数据的方法
     public void initVertexData() {
         //顶点坐标数据的初始化================begin============================
-        vCount = 3;
-        final float UNIT_SIZE = 0.15f;
+        vCount = 6;
+        final float UNIT_SIZE = 0.3f;
         float vertices[] = new float[]
                 {
-                        0 * UNIT_SIZE, 11 * UNIT_SIZE, 0,
-                        -11 * UNIT_SIZE, -11 * UNIT_SIZE, 0,
-                        11 * UNIT_SIZE, -11 * UNIT_SIZE, 0,
+                        -4*UNIT_SIZE,4*UNIT_SIZE,0,
+                        -4*UNIT_SIZE,-4*UNIT_SIZE,0,
+                        4*UNIT_SIZE,-4*UNIT_SIZE,0,
+
+                        4*UNIT_SIZE,-4*UNIT_SIZE,0,
+                        4*UNIT_SIZE,4*UNIT_SIZE,0,
+                        -4*UNIT_SIZE,4*UNIT_SIZE,0
                 };
 
         //创建顶点坐标数据缓冲
@@ -59,9 +71,13 @@ public class TextureTriangle {
         //顶点纹理坐标数据的初始化================begin============================
         float texCoor[] = new float[]//顶点颜色值数组，每个顶点4个色彩值RGBA
                 {
-                        4, 0,
-                        0, 4,
-                        1, 1
+                        0,0,
+                        0,tRange,
+                        sRange,tRange,
+
+                        sRange,tRange,
+                        sRange,0,
+                        0,0
                 };
         //创建顶点纹理坐标数据缓冲
         ByteBuffer cbb = ByteBuffer.allocateDirect(texCoor.length * 4);
@@ -95,19 +111,18 @@ public class TextureTriangle {
         //指定使用某套shader程序
         GLES30.glUseProgram(mProgram);
 
-        MatrixState.setInitStack();
-
-        //设置沿Z轴正向位移1
-        MatrixState.translate(0, 0, 1);
-
+        //初始化变换矩阵
+        Matrix.setRotateM(mMMatrix,0,0, 0, 1, 0);
+        //设置绕z轴正向位移1
+        Matrix.translateM(mMMatrix, 0, 0,0, 1);
         //设置绕y轴旋转
-        MatrixState.rotate(yAngle, 0, 1, 0);
+        Matrix.rotateM(mMMatrix, 0,yAngle,0, 1, 0);
         //设置绕z轴旋转
-        MatrixState.rotate(zAngle, 0, 0, 1);
+        Matrix.rotateM(mMMatrix, 0,zAngle,0, 0, 1);
         //设置绕x轴旋转
-        MatrixState.rotate(xAngle, 1, 0, 0);
+        Matrix.rotateM(mMMatrix, 0,xAngle,1, 0, 0);
         //将最终变换矩阵传入渲染管线
-        GLES30.glUniformMatrix4fv(muMVPMatrixHandle, 1, false, MatrixState.getFinalMatrix(), 0);
+        GLES30.glUniformMatrix4fv(muMVPMatrixHandle, 1, false, MatrixState.getFinalMatrix(mMMatrix), 0);
         //将顶点位置数据传送进渲染管线
         GLES30.glVertexAttribPointer
                 (
