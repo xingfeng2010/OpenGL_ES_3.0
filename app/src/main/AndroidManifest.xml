@@ -14,17 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".chapter6.Chapter6Activity"/>
-        <activity android:name=".chapter6.chapter61.Chapter61Activity"/>
-        <activity android:name=".chapter6.chapter62.Chapter62Activity"/>
-        <activity android:name=".chapter6.chapter63.Chapter63Activity"/>
-        <activity android:name=".chapter6.chapter64.Chapter64Activity"/>
-        <activity android:name=".chapter6.chapter65.Chapter65Activity"/>
-        <activity android:name=".chapter6.chapter66.Chapter66Activity"/>
-        <activity android:name=".chapter6.chapter67.Chapter67Activity"/>
-        <activity android:name=".chapter6.chapter68.Chapter68Activity"/>
-        <activity android:name=".chapter6.chapter69.Chapter69Activity"/>
-
         <activity android:name=".chapter5.Chapter5Activity" />
         <activity android:name=".chapter5.chapter516.Chapter516Activity"/>
         <activity android:name=".chapter5.chapter515.Chapter515Activity"/>
@@ -39,6 +28,21 @@
         <activity android:name=".chapter5.chapter53.Chapter53Activity"/>
         <activity android:name=".chapter5.chapter52.Chapter52Activity" />
         <activity android:name=".chapter5.chapter51.Chapter51Activity" />
+
+        <activity android:name=".chapter6.Chapter6Activity"/>
+        <activity android:name=".chapter6.chapter61.Chapter61Activity"/>
+        <activity android:name=".chapter6.chapter62.Chapter62Activity"/>
+        <activity android:name=".chapter6.chapter63.Chapter63Activity"/>
+        <activity android:name=".chapter6.chapter64.Chapter64Activity"/>
+        <activity android:name=".chapter6.chapter65.Chapter65Activity"/>
+        <activity android:name=".chapter6.chapter66.Chapter66Activity"/>
+        <activity android:name=".chapter6.chapter67.Chapter67Activity"/>
+        <activity android:name=".chapter6.chapter68.Chapter68Activity"/>
+        <activity android:name=".chapter6.chapter69.Chapter69Activity"/>
+
+        <activity android:name=".chapter7.Chapter7Activity"/>
+        <activity android:name=".chapter7.chapter71.Chapter71Activity"/>
+
 
         <activity android:name=".StartMainActivity">
             <intent-filter>
