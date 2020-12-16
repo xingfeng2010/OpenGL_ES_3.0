@@ -15,20 +15,23 @@ import com.xingfeng.opengles.chapter6.chapter69.Chapter69Activity;
 import com.xingfeng.opengles.chapter7.chapter71.Chapter71Activity;
 import com.xingfeng.opengles.chapter7.chapter72.Chapter72Activity;
 import com.xingfeng.opengles.chapter7.chapter73.Chapter73Activity;
+import com.xingfeng.opengles.chapter7.chapter74.Chapter74Activity;
 
 public class Chapter7Activity extends BaseListActivity {
 
     private Class[] classes = new Class[] {
             Chapter71Activity.class,
             Chapter72Activity.class,
-            Chapter73Activity.class
+            Chapter73Activity.class,
+            Chapter74Activity.class
     };
 
 
     private String[] classDescription = new String[] {
             "纹理映射--简单案例",
             "纹理映射--色彩通道组合",
-            "纹理映射--纹理拉伸"
+            "纹理映射--纹理拉伸",
+            "纹理映射--纹理采样"
     };
 
     @Override

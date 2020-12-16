@@ -44,6 +44,7 @@
         <activity android:name=".chapter7.chapter71.Chapter71Activity"/>
         <activity android:name=".chapter7.chapter72.Chapter72Activity"/>
         <activity android:name=".chapter7.chapter73.Chapter73Activity"/>
+        <activity android:name=".chapter7.chapter74.Chapter74Activity"/>
 
         <activity android:name=".StartMainActivity">
             <intent-filter>
