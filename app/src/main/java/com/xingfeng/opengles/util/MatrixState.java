@@ -23,6 +23,9 @@ public class MatrixState
     //待用的字节缓冲
     static ByteBuffer toUseBF = ByteBuffer.allocateDirect(3*4);
 
+    public static float[] lightLocationSun=new float[]{0,0,0};//太阳定位光光源位置
+    public static FloatBuffer lightPositionFBSun;
+
     //定向光方向向量数组
     public static float[] lightDirection = new float[]{0, 0 , 1};
     public static FloatBuffer lightDirectionFB;
@@ -178,5 +181,18 @@ public class MatrixState
     public static float[] getMMatrix()
     {
         return currMatrix;
+    }
+
+    //设置太阳光源位置的方法
+    public static void setLightLocationSun(float x,float y,float z)
+    {
+        lightLocationSun[0]=x;
+        lightLocationSun[1]=y;
+        lightLocationSun[2]=z;
+        ByteBuffer llbb = ByteBuffer.allocateDirect(3*4);
+        llbb.order(ByteOrder.nativeOrder());//设置字节顺序
+        lightPositionFBSun=llbb.asFloatBuffer();
+        lightPositionFBSun.put(lightLocationSun);
+        lightPositionFBSun.position(0);
     }
 }
