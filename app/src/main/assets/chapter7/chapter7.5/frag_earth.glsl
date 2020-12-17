@@ -11,9 +11,9 @@ in vec4 vDiffuse;
 in vec4 vSpecular;
 
 //白天纹理采样中采样出颜色值
-uniform sampler2d sTextureDay;
+uniform sampler2D sTextureDay;
 //黑夜纹理采样中采样出颜色值
-uniform sampler2d sTextureNight;
+uniform sampler2D sTextureNight;
 
 out vec4 fragColor;
 
