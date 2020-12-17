@@ -123,7 +123,7 @@ public class GL75SurfaceView extends GLSurfaceView {
             //调用此方法计算产生透视投影矩阵
             MatrixState.setProjectFrustum(-Constant.ratio, Constant.ratio, -1, 1, 4f, 100);
             //调用此方法产生摄像机9参数位置矩阵
-            MatrixState.setCamera(0,0,7.2f,0f,0f,0f,0f,1.0f,0.0f);
+            MatrixState.setCamera(0,0,20.2f,0f,0f,0f,0f,1.0f,0.0f);
             //打开背面剪裁
             GLES30.glEnable(GLES30.GL_CULL_FACE);
             //初始化纹理
