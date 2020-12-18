@@ -19,6 +19,7 @@ import com.xingfeng.opengles.chapter7.chapter74.Chapter74Activity;
 import com.xingfeng.opengles.chapter7.chapter75.Chapter75Activity;
 import com.xingfeng.opengles.chapter7.chapter76.Chapter76Activity;
 import com.xingfeng.opengles.chapter7.chapter77.Chapter77Activity;
+import com.xingfeng.opengles.chapter7.chapter78.Chapter78Activity;
 
 public class Chapter7Activity extends BaseListActivity {
 
@@ -29,7 +30,8 @@ public class Chapter7Activity extends BaseListActivity {
             Chapter74Activity.class,
             Chapter75Activity.class,
             Chapter76Activity.class,
-            Chapter77Activity.class
+            Chapter77Activity.class,
+            Chapter78Activity.class
     };
 
 
@@ -40,7 +42,8 @@ public class Chapter7Activity extends BaseListActivity {
             "纹理映射--纹理采样",
             "纹理映射--多重纹理与过程纹理",
             "纹理映射--纹理压缩",
-            "纹理映射--点精灵"
+            "纹理映射--点精灵",
+            "纹理映射--3D纹理"
     };
 
     @Override
