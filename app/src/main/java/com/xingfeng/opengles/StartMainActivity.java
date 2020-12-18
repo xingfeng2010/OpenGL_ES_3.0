@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.xingfeng.opengles.chapter10.Chapter10Activity;
 import com.xingfeng.opengles.chapter3.Chapter3Activity;
 import com.xingfeng.opengles.chapter5.Chapter5Activity;
 import com.xingfeng.opengles.chapter6.Chapter6Activity;
@@ -23,14 +24,17 @@ public class StartMainActivity extends BaseListActivity{
             Chapter3Activity.class,
             Chapter5Activity.class,
             Chapter6Activity.class,
-            Chapter7Activity.class
+            Chapter7Activity.class,
+            Chapter10Activity.class
+
     };
 
     protected String[] classDescription = new String[] {
             "OPENGL ES 3.0基础知识",
             "必知必会3D开发",
             "光照",
-            "纹理映射"
+            "纹理映射",
+            "纹理混合"
     };
 
 

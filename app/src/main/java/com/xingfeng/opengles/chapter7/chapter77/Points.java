@@ -67,7 +67,7 @@ public class Points {
         mVertexShader = ShaderUtil.loadFromAssetsFile("chapter7/chapter7.7/vertex.glsl",
                 mv.getResources());
         // 加载片元着色器的脚本内容
-        mFragmentShader = ShaderUtil.loadFromAssetsFile("chapter7/chapter7.7/frag.glsl",
+        mFragmentShader = ShaderUtil.loadFromAssetsFile("chapter7/chapter7.7/fragg.glsl",
                 mv.getResources());
         // 基于顶点着色器与片元着色器创建程序
         mProgram = ShaderUtil.createProgram(mVertexShader, mFragmentShader);

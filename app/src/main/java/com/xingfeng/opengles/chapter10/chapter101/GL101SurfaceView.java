@@ -1,4 +1,4 @@
-package com.xingfeng.opengles.chapter10;
+package com.xingfeng.opengles.chapter10.chapter101;
 import java.io.IOException;
 import java.io.InputStream;
 import android.opengl.GLSurfaceView;
@@ -14,9 +14,14 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.xingfeng.opengles.R;
 import com.xingfeng.opengles.util.Constant;
+import com.xingfeng.opengles.util.LoadUtil;
+import com.xingfeng.opengles.util.LoadedObjectVertexNormalAverage;
+import com.xingfeng.opengles.util.LoadedObjectVertexNormalFace;
+import com.xingfeng.opengles.util.MatrixState;
 
-class GL10SurfaceView extends GLSurfaceView
+class GL101SurfaceView extends GLSurfaceView
 {
     private SceneRenderer mRenderer;//������Ⱦ��  
 	
@@ -26,7 +31,7 @@ class GL10SurfaceView extends GLSurfaceView
 	static int rectState = KeyThread.Stop;
 	static final float moveSpan = 0.1f;
 	private KeyThread keyThread;
-	public GL10SurfaceView(Context context) {
+	public GL101SurfaceView(Context context) {
         super(context);
         this.setEGLContextClientVersion(3); //����ʹ��OPENGL ES3.0
         mRenderer = new SceneRenderer();	//����������Ⱦ��
@@ -72,7 +77,7 @@ class GL10SurfaceView extends GLSurfaceView
 		LoadedObjectVertexNormalAverage qt;
 		LoadedObjectVertexNormalAverage yh;
 		LoadedObjectVertexNormalAverage ch;
-		TextureRect rect;
+		MixTextureRect rect;
         @SuppressLint("InlinedApi")
 		@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 		public void onDrawFrame(GL10 gl) 
@@ -151,7 +156,7 @@ class GL10SurfaceView extends GLSurfaceView
             );
             //��ʼ����Դλ��
             MatrixState.setLightLocation(100, 100, 100);
-            keyThread = new KeyThread(MySurfaceView.this);
+            keyThread = new KeyThread(GL101SurfaceView.this);
             keyThread.start();
         }
         @SuppressLint("NewApi")
@@ -166,14 +171,14 @@ class GL10SurfaceView extends GLSurfaceView
             //��ʼ���任����
             MatrixState.setInitStack();         
             //����id
-            rectTexId=initTexture(R.raw.lgq);    
+            rectTexId=initTexture(R.raw.lgq);
             //����Ҫ���Ƶ�����
-            ch=LoadUtil.loadFromFileVertexOnlyAverage("ch.obj", MySurfaceView.this.getResources(),MySurfaceView.this);
-            pm=LoadUtil.loadFromFileVertexOnlyFace("pm.obj", MySurfaceView.this.getResources(),MySurfaceView.this);;
-    		cft=LoadUtil.loadFromFileVertexOnlyFace("cft.obj", MySurfaceView.this.getResources(),MySurfaceView.this);;
-    		qt=LoadUtil.loadFromFileVertexOnlyAverage("qt.obj", MySurfaceView.this.getResources(),MySurfaceView.this);;
-    		yh=LoadUtil.loadFromFileVertexOnlyAverage("yh.obj", MySurfaceView.this.getResources(),MySurfaceView.this);;
-    		rect = new TextureRect(MySurfaceView.this, 10, 10);    
+            ch= LoadUtil.loadFromFileVertexOnlyAverage("chapter10/chapter10.1/ch.obj", GL101SurfaceView.this.getResources(),GL101SurfaceView.this);
+            pm=LoadUtil.loadFromFileVertexOnlyFace("chapter10/chapter10.1/pm.obj", GL101SurfaceView.this.getResources(),GL101SurfaceView.this);;
+    		cft=LoadUtil.loadFromFileVertexOnlyFace("chapter10/chapter10.1/cft.obj", GL101SurfaceView.this.getResources(),GL101SurfaceView.this);;
+    		qt=LoadUtil.loadFromFileVertexOnlyAverage("chapter10/chapter10.1/qt.obj", GL101SurfaceView.this.getResources(),GL101SurfaceView.this);;
+    		yh=LoadUtil.loadFromFileVertexOnlyAverage("chapter10/chapter10.1/yh.obj", GL101SurfaceView.this.getResources(),GL101SurfaceView.this);;
+    		rect = new MixTextureRect(GL101SurfaceView.this, 10, 10);
         }  
     }
 
@@ -232,7 +237,7 @@ class GL10SurfaceView extends GLSurfaceView
     public void onResume() {
     	super.onResume();
     	KeyThread.flag = true;
-    	keyThread = new KeyThread(MySurfaceView.this);
+    	keyThread = new KeyThread(GL101SurfaceView.this);
         keyThread.start();
     }
 	@Override
