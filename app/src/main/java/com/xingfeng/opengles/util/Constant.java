@@ -5,4 +5,7 @@ public class Constant {
     public static float ratio;
     //旋转地月系线程的工作标志位
     public static boolean threadFlag=true;
+
+    public static int SCREEN_WIDTH = 800;
+    public static int SCREEN_HEIGHT = 480;
 }
