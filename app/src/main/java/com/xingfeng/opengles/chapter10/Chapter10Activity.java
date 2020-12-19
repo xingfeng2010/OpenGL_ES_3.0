@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import com.xingfeng.opengles.BaseListActivity;
 import com.xingfeng.opengles.chapter10.chapter101.Chapter101Activity;
+import com.xingfeng.opengles.chapter10.chapter102.Chapter102Activity;
+import com.xingfeng.opengles.chapter10.chapter103.Chapter103Activity;
 import com.xingfeng.opengles.chapter6.chapter61.Chapter61Activity;
 import com.xingfeng.opengles.chapter6.chapter62.Chapter62Activity;
 import com.xingfeng.opengles.chapter6.chapter63.Chapter63Activity;
@@ -26,12 +28,16 @@ import com.xingfeng.opengles.chapter7.chapter79.Chapter79Activity;
 public class Chapter10Activity extends BaseListActivity {
 
     private Class[] classes = new Class[] {
-            Chapter101Activity.class
+            Chapter101Activity.class,
+            Chapter102Activity.class,
+            Chapter103Activity.class
     };
 
 
     private String[] classDescription = new String[] {
-            "混和技术--简单混合"
+            "混和技术--简单混合",
+            "混和技术--简单混合2",
+            "混和技术--ETC2"
     };
 
     @Override
