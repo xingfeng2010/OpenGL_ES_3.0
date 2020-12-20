@@ -63,9 +63,9 @@ public class LoadedObjectVertexNormalAverage
     public void initShader(View mv)
     {
     	//���ض�����ɫ���Ľű�����
-        mVertexShader=ShaderUtil.loadFromAssetsFile("chapter10/chapter10.1/vertex_light.sh", mv.getResources());
+        mVertexShader=ShaderUtil.loadFromAssetsFile("chapter10/chapter10.1/vertex_light.glsl", mv.getResources());
         //����ƬԪ��ɫ���Ľű�����
-        mFragmentShader=ShaderUtil.loadFromAssetsFile("chapter10/chapter10.1/frag_light.sh", mv.getResources());
+        mFragmentShader=ShaderUtil.loadFromAssetsFile("chapter10/chapter10.1/frag_light.glsl", mv.getResources());
         //���ڶ�����ɫ����ƬԪ��ɫ����������
         mProgram = ShaderUtil.createProgram(mVertexShader, mFragmentShader);
         //��ȡ�����ж���λ����������  

@@ -1,29 +1,31 @@
 package com.xingfeng.opengles.util;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
+
 import android.opengl.GLES30;
 import android.view.View;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+
 //���غ�����塪��Я��������Ϣ���Զ������淨����
-public class LoadedObjectVertexNormalFace
-{	
-	int mProgram;//�Զ�����Ⱦ������ɫ������id  
+public class LoadedObjectVertexNormalFace2
+{
+	int mProgram;//�Զ�����Ⱦ������ɫ������id
     int muMVPMatrixHandle;//�ܱ任��������
     int muMMatrixHandle;//λ�á���ת�任����
-    int maPositionHandle; //����λ����������  
-    int maNormalHandle; //���㷨������������  
-    int maLightLocationHandle;//��Դλ����������  
-    int maCameraHandle; //�����λ���������� 
-    
-    String mVertexShader;//������ɫ������ű�    	 
-    String mFragmentShader;//ƬԪ��ɫ������ű�    
-	
-	FloatBuffer   mVertexBuffer;//�����������ݻ���  
+    int maPositionHandle; //����λ����������
+    int maNormalHandle; //���㷨������������
+    int maLightLocationHandle;//��Դλ����������
+    int maCameraHandle; //�����λ����������
+
+    String mVertexShader;//������ɫ������ű�
+    String mFragmentShader;//ƬԪ��ɫ������ű�
+
+	FloatBuffer   mVertexBuffer;//�����������ݻ���
 	FloatBuffer   mNormalBuffer;//���㷨�������ݻ���
-    int vCount=0;  
-    
-    public LoadedObjectVertexNormalFace(View mv, float[] vertices, float[] normals)
+    int vCount=0;
+
+    public LoadedObjectVertexNormalFace2(View mv, float[] vertices, float[] normals)
     {    	
     	//��ʼ����������
     	initVertexData(vertices,normals);
@@ -63,9 +65,9 @@ public class LoadedObjectVertexNormalFace
     public void initShader(View mv)
     {
     	//���ض�����ɫ���Ľű�����
-        mVertexShader=ShaderUtil.loadFromAssetsFile("chapter10/chapter10.1/vertex_light.glsl", mv.getResources());
+        mVertexShader=ShaderUtil.loadFromAssetsFile("chapter10/chapter10.5/vertex_light.glsl", mv.getResources());
         //����ƬԪ��ɫ���Ľű�����
-        mFragmentShader=ShaderUtil.loadFromAssetsFile("chapter10/chapter10.1/frag_light.glsl", mv.getResources());
+        mFragmentShader=ShaderUtil.loadFromAssetsFile("chapter10/chapter10.5/frag_light.glsl", mv.getResources());
         //���ڶ�����ɫ����ƬԪ��ɫ����������
         mProgram = ShaderUtil.createProgram(mVertexShader, mFragmentShader);
         //��ȡ�����ж���λ����������  

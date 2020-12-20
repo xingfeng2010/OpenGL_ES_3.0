@@ -14,7 +14,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.xingfeng.opengles.R;
 import com.xingfeng.opengles.chapter10.chapter101.KeyThread;
 import com.xingfeng.opengles.util.BnETC2Util;
 import com.xingfeng.opengles.util.Constant;

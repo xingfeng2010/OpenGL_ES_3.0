@@ -1,37 +1,39 @@
 package com.xingfeng.opengles.util;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
+
 import android.opengl.GLES30;
 import android.view.View;
 
-//���غ�����塪��Я��������Ϣ���Զ������淨����
-public class LoadedObjectVertexNormalFace
-{	
-	int mProgram;//�Զ�����Ⱦ������ɫ������id  
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+
+//���غ�����塪��Я��������Ϣ���Զ�������ƽ��������
+public class LoadedObjectVertexNormalAverage2
+{
+	int mProgram;//�Զ�����Ⱦ������ɫ������id
     int muMVPMatrixHandle;//�ܱ任��������
     int muMMatrixHandle;//λ�á���ת�任����
-    int maPositionHandle; //����λ����������  
-    int maNormalHandle; //���㷨������������  
-    int maLightLocationHandle;//��Դλ����������  
-    int maCameraHandle; //�����λ���������� 
-    
-    String mVertexShader;//������ɫ������ű�    	 
-    String mFragmentShader;//ƬԪ��ɫ������ű�    
-	
-	FloatBuffer   mVertexBuffer;//�����������ݻ���  
+    int maPositionHandle; //����λ����������
+    int maNormalHandle; //���㷨������������
+    int maLightLocationHandle;//��Դλ����������
+    int maCameraHandle; //�����λ����������
+
+    String mVertexShader;//������ɫ������ű�
+    String mFragmentShader;//ƬԪ��ɫ������ű�
+
+	FloatBuffer   mVertexBuffer;//�����������ݻ���
 	FloatBuffer   mNormalBuffer;//���㷨�������ݻ���
-    int vCount=0;  
-    
-    public LoadedObjectVertexNormalFace(View mv, float[] vertices, float[] normals)
+    int vCount=0;
+
+    public LoadedObjectVertexNormalAverage2(View mv, float[] vertices, float[] normals)
     {    	
     	//��ʼ����������
     	initVertexData(vertices,normals);
-    	//��ʼ����ɫ��        
+    	//��ʼ����ɫ��       
     	initShader(mv);
     }
     
-    //��ʼ���������ݵķ���
+    //��ʼ����������
     public void initVertexData(float[] vertices,float[] normals)
     {
     	//�����������ݵĳ�ʼ��================begin============================
@@ -63,9 +65,9 @@ public class LoadedObjectVertexNormalFace
     public void initShader(View mv)
     {
     	//���ض�����ɫ���Ľű�����
-        mVertexShader=ShaderUtil.loadFromAssetsFile("chapter10/chapter10.1/vertex_light.glsl", mv.getResources());
+        mVertexShader=ShaderUtil.loadFromAssetsFile("chapter10/chapter10.5/vertex_light.glsl", mv.getResources());
         //����ƬԪ��ɫ���Ľű�����
-        mFragmentShader=ShaderUtil.loadFromAssetsFile("chapter10/chapter10.1/frag_light.glsl", mv.getResources());
+        mFragmentShader=ShaderUtil.loadFromAssetsFile("chapter10/chapter10.5/frag_light.glsl", mv.getResources());
         //���ڶ�����ɫ����ƬԪ��ɫ����������
         mProgram = ShaderUtil.createProgram(mVertexShader, mFragmentShader);
         //��ȡ�����ж���λ����������  
@@ -90,11 +92,10 @@ public class LoadedObjectVertexNormalFace
          GLES30.glUniformMatrix4fv(muMVPMatrixHandle, 1, false, MatrixState.getFinalMatrix(), 0); 
          //��λ�á���ת�任��������Ⱦ����
          GLES30.glUniformMatrix4fv(muMMatrixHandle, 1, false, MatrixState.getMMatrix(), 0);   
-         //����Դλ�ô�����Ⱦ����  
+         //����Դλ�ô�����Ⱦ����
          GLES30.glUniform3fv(maLightLocationHandle, 1, MatrixState.lightPositionFB);
-         //�������λ�ô�����Ⱦ���� 
+         //�������λ�ô�����Ⱦ����   
          GLES30.glUniform3fv(maCameraHandle, 1, MatrixState.cameraFB);
-         
          // ������λ�����ݴ�����Ⱦ����
          GLES30.glVertexAttribPointer  
          (
@@ -118,7 +119,7 @@ public class LoadedObjectVertexNormalFace
          //���ö���λ�á���������������
          GLES30.glEnableVertexAttribArray(maPositionHandle);  
          GLES30.glEnableVertexAttribArray(maNormalHandle);  
-         //���Ʊ����ص�����
+         //���Ƽ��ص�����
          GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, vCount); 
     }
 }

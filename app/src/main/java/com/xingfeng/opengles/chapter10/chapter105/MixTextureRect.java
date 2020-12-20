@@ -1,14 +1,13 @@
-package com.xingfeng.opengles.chapter10.chapter101;
+package com.xingfeng.opengles.chapter10.chapter105;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
 import android.opengl.GLES30;
 import android.view.View;
 
 import com.xingfeng.opengles.util.MatrixState;
 import com.xingfeng.opengles.util.ShaderUtil;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
 
 public class MixTextureRect
 {
