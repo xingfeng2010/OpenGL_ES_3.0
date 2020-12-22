@@ -73,9 +73,9 @@ public class LoadedObjectVertexNormalAverage
         //��ȡ�����ж�����ɫ��������  
         maNormalHandle= GLES30.glGetAttribLocation(mProgram, "aNormal");
         //��ȡ�������ܱ任��������
-        muMVPMatrixHandle = GLES30.glGetUniformLocation(mProgram, "uMVPMatrix");  
+        muMVPMatrixHandle = GLES30.glGetUniformLocation(mProgram, "uMVPMatrix");
         //��ȡλ�á���ת�任��������
-        muMMatrixHandle = GLES30.glGetUniformLocation(mProgram, "uMMatrix"); 
+        muMMatrixHandle = GLES30.glGetUniformLocation(mProgram, "uMMatrix");
         //��ȡ�����й�Դλ������
         maLightLocationHandle=GLES30.glGetUniformLocation(mProgram, "uLightLocation");
         //��ȡ�����������λ������

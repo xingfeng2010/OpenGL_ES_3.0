@@ -8,4 +8,7 @@ public class Constant {
 
     public static int SCREEN_WIDTH = 800;
     public static int SCREEN_HEIGHT = 480;
+
+    public static String OBJ_VER_PATH = "";
+    public static String OBJ_FRAG_PATH = "";
 }
