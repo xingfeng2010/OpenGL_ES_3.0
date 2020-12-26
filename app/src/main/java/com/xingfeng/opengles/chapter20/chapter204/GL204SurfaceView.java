@@ -30,6 +30,7 @@ public class GL204SurfaceView extends GLSurfaceView {
     private float mPreviousX;//上次的触控位置X坐标
 
     int textureId;//系统分配的纹理id
+    BallAndCube mBallAndCube;
 
     public GL204SurfaceView(Context context) {
         super(context);
@@ -53,7 +54,13 @@ public class GL204SurfaceView extends GLSurfaceView {
                 float dx = x - mPreviousX;//计算触控点X位移
                 mRenderer.yAngle += dx * TOUCH_SCALE_FACTOR;//设置沿x轴旋转角度
                 mRenderer.xAngle+= dy * TOUCH_SCALE_FACTOR;//设置沿z轴旋转角度
-                requestRender();//重绘画面
+                if (mBallAndCube == null) {
+                    return false;
+                }
+
+                mBallAndCube.yAngle += dx * TOUCH_SCALE_FACTOR;
+                mBallAndCube.zAngle += dy* TOUCH_SCALE_FACTOR;
+                //requestRender();//重绘画面
         }
         mPreviousY = y;//记录触控点位置
         mPreviousX = x;//记录触控点位置
@@ -74,16 +81,7 @@ public class GL204SurfaceView extends GLSurfaceView {
 
             //保护现场
             MatrixState.pushMatrix();
-            //坐标系推远
-            MatrixState.translate(0, -16f, -100f);
-            //绕Y轴、X轴旋转
-            MatrixState.rotate(yAngle, 0, 1, 0);
-            MatrixState.rotate(xAngle, 1, 0, 0);
-            //绘制软管
-            MatrixState.pushMatrix();
-            MatrixState.rotate(-90, 1, 0, 0);
-            lovo.drawSelf(textureId);
-            MatrixState.popMatrix();
+            mBallAndCube.drawSelf(textureId);
 
             //恢复现场
             MatrixState.popMatrix();
@@ -112,10 +110,13 @@ public class GL204SurfaceView extends GLSurfaceView {
             MatrixState.setInitStack();
             //初始化光源位置
             MatrixState.setLightLocation(40, 10, 20);
-            //加载要绘制的物体
-            lovo=LoadUtil.loadFromFile3("chapter201/chapter201.3/rg.obj", GL204SurfaceView.this.getResources(),GL204SurfaceView.this);
+
             //加载纹理
-            textureId=initTexture(R.drawable.ghxp);
+            textureId=initTexture(R.drawable.android_robot0);
+
+            mBallAndCube = new BallAndCube(GL204SurfaceView.this, 1.5f);
+            UpdateThread mt = new UpdateThread(GL204SurfaceView.this);
+            mt.start();
         }
     }
     public int initTexture(int drawableId)//textureId
