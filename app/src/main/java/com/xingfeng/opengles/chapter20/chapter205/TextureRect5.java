@@ -83,9 +83,9 @@ public class TextureRect5
     public void initShader(View mv)
     {
         //加载顶点着色器的脚本内容
-        mVertexShader= ShaderUtil.loadFromAssetsFile("vertex_tex.sh", mv.getResources());
+        mVertexShader= ShaderUtil.loadFromAssetsFile("chapter201/chapter201.5/vertex_tex.sh", mv.getResources());
         //加载片元着色器的脚本内容
-        mFragmentShader=ShaderUtil.loadFromAssetsFile("frag_tex.sh", mv.getResources());
+        mFragmentShader=ShaderUtil.loadFromAssetsFile("chapter201/chapter201.5/frag_tex.sh", mv.getResources());
         //基于顶点着色器与片元着色器创建程序
         mProgram = ShaderUtil.createProgram(mVertexShader, mFragmentShader);
         //获取程序中顶点位置属性引用

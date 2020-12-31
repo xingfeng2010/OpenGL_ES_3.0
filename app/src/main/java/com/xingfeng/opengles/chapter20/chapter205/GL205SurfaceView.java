@@ -11,15 +11,14 @@ import android.view.MotionEvent;
 
 import com.xingfeng.opengles.R;
 import com.xingfeng.opengles.util.LoadUtil;
-import com.xingfeng.opengles.util.LoadedObjectVertexNormalTexture;
-import com.xingfeng.opengles.util.LoadedObjectVertexNormalTexture2;
-import com.xingfeng.opengles.util.LoadedObjectVertexNormalTexture3;
+import com.xingfeng.opengles.util.LoadedObjectVertexNormalTexture5;
 import com.xingfeng.opengles.util.MatrixState;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL;
 import javax.microedition.khronos.opengles.GL10;
 
 public class GL205SurfaceView extends GLSurfaceView {
@@ -29,7 +28,13 @@ public class GL205SurfaceView extends GLSurfaceView {
     private float mPreviousY;//上次的触控位置Y坐标
     private float mPreviousX;//上次的触控位置X坐标
 
-    int textureId;//系统分配的纹理id
+    float ratio;
+
+    static final int GEN_TEX_WIDTH=1024;
+    static final int GEN_TEX_HEIGHT=1024;
+
+    int SCREEN_WIDTH;
+    int SCREEN_HEIGHT;
 
     public GL205SurfaceView(Context context) {
         super(context);
@@ -65,39 +70,119 @@ public class GL205SurfaceView extends GLSurfaceView {
         float yAngle;//绕Y轴旋转的角度
         float xAngle; //绕X轴旋转的角度
         //从指定的obj文件中加载对象
-        LoadedObjectVertexNormalTexture3 lovo;
+        LoadedObjectVertexNormalTexture5 lovo;
 
-        public void onDrawFrame(GL10 gl)
-        {
-            //清除深度缓冲与颜色缓冲
-            GLES30.glClear( GLES30.GL_DEPTH_BUFFER_BIT | GLES30.GL_COLOR_BUFFER_BIT);
+        //帧缓冲id
+        int frameBufferId;
+        //渲染深度缓冲id
+        int renderDepthBufferId;
+        //最后生成的纹理id
+        int textureId;
+        //国画小品的纹理id
+        int textureIdGHXP;
+        //矩形绘制对象
+        TextureRect5 tr;
 
-            //保护现场
-            MatrixState.pushMatrix();
-            //坐标系推远
-            MatrixState.translate(0, -16f, -100f);
+        //初始化帧缓冲和渲染缓冲的方法
+        public void initFRBuffers() {
+            //用于存放产生的帧缓冲id的数组
+            int tia[] = new int[1];
+            //产生一个帧缓冲id
+            GLES30.glGenFramebuffers(1, tia, 0);
+            //绑定帧缓冲id
+            GLES30.glBindFramebuffer(GLES30.GL_FRAMEBUFFER, frameBufferId);
+
+            //产生一个渲染缓冲id
+            GLES30.glGenRenderbuffers(1, tia, 0);
+            renderDepthBufferId=tia[0];
+            GLES30.glBindRenderbuffer(GLES30.GL_RENDERBUFFER, renderDepthBufferId);
+            //为渲染缓冲区初始化存储
+            GLES30.glRenderbufferStorage(GLES30.GL_RENDERBUFFER,
+                    GLES30.GL_DEPTH_COMPONENT16, GEN_TEX_WIDTH, GEN_TEX_HEIGHT);
+
+            int[] tempIds = new int[1];
+            GLES30.glGenTextures(1, tempIds, 0);
+            textureId = tempIds[0];
+            GLES30.glBindTexture(GLES30.GL_TEXTURE_2D,textureId);//绑定纹理id
+            GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D,//设置MIN采样方式
+                    GLES30.GL_TEXTURE_MIN_FILTER,GLES30.GL_LINEAR);
+            GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D,//设置MAG采样方式
+                    GLES30.GL_TEXTURE_MAG_FILTER,GLES30.GL_LINEAR);
+            GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D,//设置S轴拉伸方式
+                    GLES30.GL_TEXTURE_WRAP_S,GLES30.GL_CLAMP_TO_EDGE);
+            GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D,//设置T轴拉伸方式
+                    GLES30.GL_TEXTURE_WRAP_T,GLES30.GL_CLAMP_TO_EDGE);
+            //设置颜色附件纹理图的格式
+            GLES30.glTexImage2D(GLES30.GL_TEXTURE_2D, 0,GLES30.GL_RGBA,GEN_TEX_WIDTH,GEN_TEX_HEIGHT,
+                    0, GLES30.GL_RGBA, GLES30.GL_UNSIGNED_BYTE, null);
+            //设置自定义帧缓冲的颜色缓冲附件
+            GLES30.glFramebufferTexture2D(GLES30.GL_FRAMEBUFFER, GLES30.GL_COLOR_ATTACHMENT0,
+                    GLES30.GL_TEXTURE_2D, textureId, 0);
+            //设置自定义帧缓冲的深度缓冲附件
+            GLES30.glFramebufferRenderbuffer(GLES30.GL_FRAMEBUFFER,GLES30.GL_DEPTH_ATTACHMENT,
+                    GLES30.GL_RENDERBUFFER,renderDepthBufferId);
+
+        }
+
+        //通过绘制产生纹理
+        public void generateTextImage() {
+            //设置视窗大小及位置
+            GLES30.glViewport(0, 0, GEN_TEX_WIDTH, GEN_TEX_HEIGHT);
+            //绑定帧缓冲id
+            GLES30.glBindFramebuffer(GLES30.GL_FRAMEBUFFER, frameBufferId);
+            //清楚深度缓冲与颜色缓冲
+            GLES30.glClear(GLES30.GL_DEPTH_BUFFER_BIT | GLES30.GL_COLOR_BUFFER_BIT);
+
+            //设置透视投影
+            MatrixState.setProjectFrustum(-ratio, ratio, -1, 1, 2, 100);
+            //调用此方法产生摄像机9参数位置矩阵
+            MatrixState.setCamera(0,0,0,0f,0f,-1f,0f,1.0f,0.0f);
+
+            MatrixState.pushMatrix();//保护现场
+            MatrixState.translate(0, -16f, -80f);//坐标系推远
             //绕Y轴、X轴旋转
             MatrixState.rotate(yAngle, 0, 1, 0);
             MatrixState.rotate(xAngle, 1, 0, 0);
-            //绘制软管
-            MatrixState.pushMatrix();
-            MatrixState.rotate(-90, 1, 0, 0);
-            lovo.drawSelf(textureId);
-            MatrixState.popMatrix();
+            if(lovo!=null)//若加载的物体不为空则绘制物体
+            {
+                lovo.drawSelf(textureIdGHXP);
+            }
+            MatrixState.popMatrix();//恢复现场
 
-            //恢复现场
+        }
+
+        //绘制生成的矩形纹理
+        public void drawShadowTexture() {
+            //设置视窗大小及位置
+            GLES30.glViewport(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
+            GLES30.glBindFramebuffer(GLES30.GL_FRAMEBUFFER, 0);//绑定帧缓冲id
+            //清除深度缓冲与颜色缓冲
+            GLES30.glClear(GLES30.GL_DEPTH_BUFFER_BIT |GLES30.GL_COLOR_BUFFER_BIT);
+            //设置正交投影
+            MatrixState.setProjectOrtho(-ratio, ratio, -1, 1, 2, 100);
+            //调用此方法产生摄像机9参数位置矩阵
+            MatrixState.setCamera(0,0,3,0f,0f,0f,0f,1.0f,0.0f);
+            MatrixState.pushMatrix();
+            tr.drawSelf(textureId);//绘制纹理矩形
             MatrixState.popMatrix();
         }
 
+        public void onDrawFrame(GL10 gl)
+        {
+            generateTextImage();//通过绘制产生矩形纹理
+            drawShadowTexture();//绘制矩形纹理
+        }
+
         public void onSurfaceChanged(GL10 gl, int width, int height) {
-            //设置视窗大小及位置
-            GLES30.glViewport(0, 0, width, height);
+            SCREEN_WIDTH = width;
+            SCREEN_HEIGHT = height;
+
             //计算GLSurfaceView的宽高比
             float ratio = (float) width / height;
-            //调用此方法计算产生透视投影矩阵
-            MatrixState.setProjectFrustum(-ratio, ratio, -1, 1, 2, 1000);
-            //调用此方法产生摄像机9参数位置矩阵
-            MatrixState.setCamera(0,0,5,0f,0f,-1f,0f,1.0f,0.0f);
+
+            initFRBuffers();
+            textureIdGHXP = initTexture(R.drawable.ghxp);
+            tr = new TextureRect5(GL205SurfaceView.this, ratio);
         }
 
         public void onSurfaceCreated(GL10 gl, EGLConfig config)
@@ -113,7 +198,7 @@ public class GL205SurfaceView extends GLSurfaceView {
             //初始化光源位置
             MatrixState.setLightLocation(40, 10, 20);
             //加载要绘制的物体
-            lovo=LoadUtil.loadFromFile3("chapter201/chapter201.3/rg.obj", GL205SurfaceView.this.getResources(),GL205SurfaceView.this);
+            lovo=LoadUtil.loadFromFile5("chapter201/chapter201.5/ch_t.obj", GL205SurfaceView.this.getResources(),GL205SurfaceView.this);
             //加载纹理
             textureId=initTexture(R.drawable.ghxp);
         }
