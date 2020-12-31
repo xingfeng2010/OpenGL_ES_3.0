@@ -8,6 +8,7 @@ import com.xingfeng.opengles.chapter20.chapter202.Chapter202Activity;
 import com.xingfeng.opengles.chapter20.chapter203.Chapter203Activity;
 import com.xingfeng.opengles.chapter20.chapter204.Chapter204Activity;
 import com.xingfeng.opengles.chapter20.chapter205.Chapter205Activity;
+import com.xingfeng.opengles.chapter20.chapter206.Chapter206Activity;
 
 public class Chapter20Activity extends BaseListActivity {
 
@@ -16,7 +17,8 @@ public class Chapter20Activity extends BaseListActivity {
             Chapter202Activity.class,
             Chapter203Activity.class,
             Chapter204Activity.class,
-            Chapter205Activity.class
+            Chapter205Activity.class,
+            Chapter206Activity.class
     };
 
 
@@ -25,7 +27,8 @@ public class Chapter20Activity extends BaseListActivity {
             "缓冲区对象-顶点数组缓冲区-VAO",
             "缓冲区对象-一致缓冲区对象-UBO",
             "缓冲区对象-映射缓冲区",
-            "缓冲区对象-帧缓冲与渲染缓冲"
+            "缓冲区对象-帧缓冲与渲染缓冲",
+            "缓冲区对象-多重渲染目标"
     };
 
     @Override
