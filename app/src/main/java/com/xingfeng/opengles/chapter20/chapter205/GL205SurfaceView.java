@@ -89,6 +89,8 @@ public class GL205SurfaceView extends GLSurfaceView {
             int tia[] = new int[1];
             //产生一个帧缓冲id
             GLES30.glGenFramebuffers(1, tia, 0);
+
+            frameBufferId = tia[0];
             //绑定帧缓冲id
             GLES30.glBindFramebuffer(GLES30.GL_FRAMEBUFFER, frameBufferId);
 
@@ -178,7 +180,7 @@ public class GL205SurfaceView extends GLSurfaceView {
             SCREEN_HEIGHT = height;
 
             //计算GLSurfaceView的宽高比
-            float ratio = (float) width / height;
+            ratio = (float) width / height;
 
             initFRBuffers();
             textureIdGHXP = initTexture(R.drawable.ghxp);
@@ -199,8 +201,6 @@ public class GL205SurfaceView extends GLSurfaceView {
             MatrixState.setLightLocation(40, 10, 20);
             //加载要绘制的物体
             lovo=LoadUtil.loadFromFile5("chapter201/chapter201.5/ch_t.obj", GL205SurfaceView.this.getResources(),GL205SurfaceView.this);
-            //加载纹理
-            textureId=initTexture(R.drawable.ghxp);
         }
     }
     public int initTexture(int drawableId)//textureId
