@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.xingfeng.opengles.chapter10.Chapter10Activity;
 import com.xingfeng.opengles.chapter20.Chapter20Activity;
+import com.xingfeng.opengles.chapter22.Chapter22Activity;
 import com.xingfeng.opengles.chapter3.Chapter3Activity;
 import com.xingfeng.opengles.chapter5.Chapter5Activity;
 import com.xingfeng.opengles.chapter6.Chapter6Activity;
@@ -28,7 +29,8 @@ public class StartMainActivity extends BaseListActivity{
             Chapter6Activity.class,
             Chapter7Activity.class,
             Chapter10Activity.class,
-            Chapter20Activity.class
+            Chapter20Activity.class,
+            Chapter22Activity.class
 
     };
 
@@ -38,7 +40,8 @@ public class StartMainActivity extends BaseListActivity{
             "光照",
             "纹理映射",
             "纹理混合",
-            "缓冲区对象"
+            "缓冲区对象",
+            "顶点着色器"
     };
 
 
