@@ -24,22 +24,40 @@ public class SugarRect {
     FloatBuffer mTexCoorBuffer;//顶点纹理坐标数据缓冲
     int vCount = 0;
     final float WIDTH_SPAN = 0.575f;//2.8f;//横向长度总跨度
-    final float Y_MAX=1.5f;
-    final float Y_MIN=-1.5f;
+    final float Y_MAX=1.0f;
+    final float Y_MIN=-1.0f;
     final float HEIGHT_SPAN = Y_MAX - Y_MIN;//纵向长度总跨度
     int HIGH_NUMS = 6;
     private int uHeightSpanHandle;
-    private int uYStartHandle;
-    private int uYSpanHandle;
+    private int uAngleSpanHandle;
 
     float angleSpan=0;
-    float angleStep=2f;
+    float angleStep=0.5f;
 
     public SugarRect(View mv) {
         //初始化顶点坐标与着色数据
         initVertexData();
         //初始化shader
         initShader(mv);
+
+        new Thread() {
+
+            @Override
+            public void run() {
+                while (true) {
+                    if (angleSpan >= 2.0f || angleSpan<= -2.0f) {
+                        angleStep = -angleStep;
+                    }
+                    angleSpan+=angleStep;
+
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
     }
 
     //初始化顶点坐标与着色数据的方法
@@ -168,6 +186,8 @@ public class SugarRect {
         muMVPMatrixHandle = GLES30.glGetUniformLocation(mProgram, "uMVPMatrix");
         //获取程序中总扭曲角度跨度
         uHeightSpanHandle = GLES30.glGetUniformLocation(mProgram, "uHeightSpan");
+
+        uAngleSpanHandle = GLES30.glGetUniformLocation(mProgram, "uAngleSpanH");
     }
 
     @SuppressLint("NewApi")
@@ -205,12 +225,7 @@ public class SugarRect {
         GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, texId);
 
         GLES30.glUniform1f(uHeightSpanHandle , HEIGHT_SPAN);
-        try {
-            Thread.sleep(20);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        GLES30.glUniform1f(uAngleSpanHandle , angleSpan);
 
         GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, vCount);
     }

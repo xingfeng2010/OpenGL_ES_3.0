@@ -5,6 +5,8 @@ uniform mat4 uMVPMatrix;
 //横向长度总跨度
 uniform float uHeightSpan;
 
+uniform float uAngleSpanH;
+
 //顶点位置
 in vec3 aPosition;
 //顶点纹理坐标
@@ -13,12 +15,10 @@ in vec2 aTexCoor;
 out vec2 vTextureCoord;
 
 void main() {
-    //计算X向波浪
-    float angleSpanH = 2.0;
     //起始X坐标(即最左侧顶点的X坐标)
     float startY = -uHeightSpan / 2.0;
     //根据横向角度总跨度、横向长度总跨度及当前点X坐标折算出当前顶点X坐标对应的角度
-    float currAngle = ((aPosition.y - startY) / uHeightSpan) * angleSpanH;
+    float currAngle = ((aPosition.y - startY) / uHeightSpan) * uAngleSpanH;
 
     vec3 tPosition = aPosition;
     if (aPosition.y > startY) {
