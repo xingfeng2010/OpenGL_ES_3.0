@@ -61,13 +61,13 @@ public class SugarRect {
             vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * (i+1);
             vertices[count++] = WIDTH_SPAN / 2;
 
+            vertices[count++] = WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * i;
+            vertices[count++] = WIDTH_SPAN / 2;
             vertices[count++] = -WIDTH_SPAN / 2;
             vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * (i+1);
             vertices[count++] = WIDTH_SPAN / 2;
             vertices[count++] = -WIDTH_SPAN / 2;
-            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * i;
-            vertices[count++] = WIDTH_SPAN / 2;
-            vertices[count++] = WIDTH_SPAN / 2;
             vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * i;
             vertices[count++] = WIDTH_SPAN / 2;
 
@@ -82,13 +82,13 @@ public class SugarRect {
             vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * (i+1);
             vertices[count++] = -WIDTH_SPAN / 2;
 
+            vertices[count++] = WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * i;
+            vertices[count++] = -WIDTH_SPAN / 2;
             vertices[count++] = -WIDTH_SPAN / 2;
             vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * (i+1);
             vertices[count++] = -WIDTH_SPAN / 2;
             vertices[count++] = -WIDTH_SPAN / 2;
-            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * i;
-            vertices[count++] = -WIDTH_SPAN / 2;
-            vertices[count++] = WIDTH_SPAN / 2;
             vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * i;
             vertices[count++] = -WIDTH_SPAN / 2;
 
@@ -104,14 +104,14 @@ public class SugarRect {
             vertices[count++] = WIDTH_SPAN / 2;
 
             vertices[count++] = -WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * i;
+            vertices[count++] = -WIDTH_SPAN / 2;
+            vertices[count++] = -WIDTH_SPAN / 2;
             vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * (i+1);
             vertices[count++] = WIDTH_SPAN / 2;
             vertices[count++] = -WIDTH_SPAN / 2;
             vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * i;
             vertices[count++] = WIDTH_SPAN / 2;
-            vertices[count++] = -WIDTH_SPAN / 2;
-            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * i;
-            vertices[count++] = -WIDTH_SPAN / 2;
 
             //右面矩形
             vertices[count++] = WIDTH_SPAN / 2;
@@ -125,14 +125,14 @@ public class SugarRect {
             vertices[count++] = WIDTH_SPAN / 2;
 
             vertices[count++] = WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * i;
+            vertices[count++] = -WIDTH_SPAN / 2;
+            vertices[count++] = WIDTH_SPAN / 2;
             vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * (i+1);
             vertices[count++] = WIDTH_SPAN / 2;
             vertices[count++] = WIDTH_SPAN / 2;
             vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * i;
             vertices[count++] = WIDTH_SPAN / 2;
-            vertices[count++] = WIDTH_SPAN / 2;
-            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * i;
-            vertices[count++] = -WIDTH_SPAN / 2;
         }
         //创建顶点坐标数据缓冲
         //vertices.length*4是因为一个整数四个字节
@@ -232,9 +232,9 @@ public class SugarRect {
             result[c++] = 1.0f;
             result[c++] = 1.0f;
             result[c++] = 0.0f;
+            result[c++] = 0.0f;
+            result[c++] = 0.0f;
             result[c++] = 1.0f;
-            result[c++] = 0.0f;
-            result[c++] = 0.0f;
 
             //后面矩形
             result[c++] = 1.0f;
@@ -247,9 +247,9 @@ public class SugarRect {
             result[c++] = 1.0f;
             result[c++] = 1.0f;
             result[c++] = 0.0f;
+            result[c++] = 0.0f;
+            result[c++] = 0.0f;
             result[c++] = 1.0f;
-            result[c++] = 0.0f;
-            result[c++] = 0.0f;
 
             //左面矩形
             result[c++] = 1.0f;
@@ -262,9 +262,9 @@ public class SugarRect {
             result[c++] = 1.0f;
             result[c++] = 1.0f;
             result[c++] = 0.0f;
+            result[c++] = 0.0f;
+            result[c++] = 0.0f;
             result[c++] = 1.0f;
-            result[c++] = 0.0f;
-            result[c++] = 0.0f;
 
             //右面矩形
             result[c++] = 1.0f;
@@ -277,9 +277,9 @@ public class SugarRect {
             result[c++] = 1.0f;
             result[c++] = 1.0f;
             result[c++] = 0.0f;
+            result[c++] = 0.0f;
+            result[c++] = 0.0f;
             result[c++] = 1.0f;
-            result[c++] = 0.0f;
-            result[c++] = 0.0f;
         }
         return result;
     }
