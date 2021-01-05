@@ -2,7 +2,6 @@
 //总变换矩阵
 uniform mat4 uMVPMatrix;
 //本帧起始角度(即最左侧顶点的对应角度)
-uniform float uStartAngle;
 //横向长度总跨度
 uniform float uHeightSpan;
 
@@ -15,12 +14,11 @@ out vec2 vTextureCoord;
 
 void main() {
     //计算X向波浪
-    //横向角度总跨度，用于进行X距离与角度的换算
-    float angleSpanH = 4.0 * 3.1415926;
+    float angleSpanH = 2.0;
     //起始X坐标(即最左侧顶点的X坐标)
-    float startY = uHeightSpan / 2.0;
+    float startY = -uHeightSpan / 2.0;
     //根据横向角度总跨度、横向长度总跨度及当前点X坐标折算出当前顶点X坐标对应的角度
-    float currAngle = uStartAngle + ((aPosition.y - startY) / uHeightSpan) * angleSpanH;
+    float currAngle = ((aPosition.y - startY) / uHeightSpan) * angleSpanH;
 
     vec3 tPosition = aPosition;
     if (aPosition.y > startY) {

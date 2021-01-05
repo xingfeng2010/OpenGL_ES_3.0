@@ -24,9 +24,16 @@ public class SugarRect {
     FloatBuffer mTexCoorBuffer;//顶点纹理坐标数据缓冲
     int vCount = 0;
     final float WIDTH_SPAN = 0.575f;//2.8f;//横向长度总跨度
-    final float HEIGHT_SPAN = 3.0f;//纵向长度总跨度
-    float currStartAngle = 0;//当前帧的起始角度0~2PI
+    final float Y_MAX=1.5f;
+    final float Y_MIN=-1.5f;
+    final float HEIGHT_SPAN = Y_MAX - Y_MIN;//纵向长度总跨度
     int HIGH_NUMS = 6;
+    private int uHeightSpanHandle;
+    private int uYStartHandle;
+    private int uYSpanHandle;
+
+    float angleSpan=0;
+    float angleStep=2f;
 
     public SugarRect(View mv) {
         //初始化顶点坐标与着色数据
@@ -41,31 +48,91 @@ public class SugarRect {
         vCount = HIGH_NUMS *4* 6;//每个格子两个三角形，每个三角形3个顶点
         float vertices[] = new float[vCount * 3];//每个顶点xyz三个坐标
         int count = 0;//顶点计数器
+        float heighSpan = HEIGHT_SPAN / HIGH_NUMS;
         for (int i = 0; i < HIGH_NUMS; i++) {
-            //计算当前格子左上侧点坐标
+            //前面矩形
             vertices[count++] = WIDTH_SPAN / 2;
-            vertices[count++] = -HEIGHT_SPAN / 2 + HEIGHT_SPAN * i / HIGH_NUMS;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * i;
+            vertices[count++] = WIDTH_SPAN / 2;
+            vertices[count++] = WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * (i+1);
+            vertices[count++] = WIDTH_SPAN / 2;
+            vertices[count++] = -WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * (i+1);
+            vertices[count++] = WIDTH_SPAN / 2;
+
+            vertices[count++] = -WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * (i+1);
+            vertices[count++] = WIDTH_SPAN / 2;
+            vertices[count++] = -WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * i;
+            vertices[count++] = WIDTH_SPAN / 2;
+            vertices[count++] = WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * i;
+            vertices[count++] = WIDTH_SPAN / 2;
+
+            //后面矩形
+            vertices[count++] = WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * i;
+            vertices[count++] = -WIDTH_SPAN / 2;
+            vertices[count++] = WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * (i+1);
+            vertices[count++] = -WIDTH_SPAN / 2;
+            vertices[count++] = -WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * (i+1);
+            vertices[count++] = -WIDTH_SPAN / 2;
+
+            vertices[count++] = -WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * (i+1);
+            vertices[count++] = -WIDTH_SPAN / 2;
+            vertices[count++] = -WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * i;
+            vertices[count++] = -WIDTH_SPAN / 2;
+            vertices[count++] = WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * i;
+            vertices[count++] = -WIDTH_SPAN / 2;
+
+            //左面矩形
+            vertices[count++] = -WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * i;
+            vertices[count++] = -WIDTH_SPAN / 2;
+            vertices[count++] = -WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * (i+1);
+            vertices[count++] = -WIDTH_SPAN / 2;
+            vertices[count++] = -WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * (i+1);
+            vertices[count++] = WIDTH_SPAN / 2;
+
+            vertices[count++] = -WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * (i+1);
+            vertices[count++] = WIDTH_SPAN / 2;
+            vertices[count++] = -WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * i;
+            vertices[count++] = WIDTH_SPAN / 2;
+            vertices[count++] = -WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * i;
+            vertices[count++] = -WIDTH_SPAN / 2;
+
+            //右面矩形
+            vertices[count++] = WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * i;
+            vertices[count++] = -WIDTH_SPAN / 2;
+            vertices[count++] = WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * (i+1);
+            vertices[count++] = -WIDTH_SPAN / 2;
+            vertices[count++] = WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * (i+1);
             vertices[count++] = WIDTH_SPAN / 2;
 
             vertices[count++] = WIDTH_SPAN / 2;
-            vertices[count++] = -HEIGHT_SPAN / 2 + HEIGHT_SPAN * i / HIGH_NUMS;
-            vertices[count++] = -WIDTH_SPAN / 2;
-
-            vertices[count++] = -WIDTH_SPAN / 2;
-            vertices[count++] = -HEIGHT_SPAN / 2 + HEIGHT_SPAN * i / HIGH_NUMS;
-            vertices[count++] = -WIDTH_SPAN / 2;
-
-            vertices[count++] = -WIDTH_SPAN / 2;
-            vertices[count++] = -HEIGHT_SPAN / 2 + HEIGHT_SPAN * i / HIGH_NUMS;
-            vertices[count++] = -WIDTH_SPAN / 2;
-
-            vertices[count++] = -WIDTH_SPAN / 2;
-            vertices[count++] = -HEIGHT_SPAN / 2 + HEIGHT_SPAN * i / HIGH_NUMS;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * (i+1);
             vertices[count++] = WIDTH_SPAN / 2;
-
             vertices[count++] = WIDTH_SPAN / 2;
-            vertices[count++] = -HEIGHT_SPAN / 2 + HEIGHT_SPAN * i / HIGH_NUMS;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * i;
             vertices[count++] = WIDTH_SPAN / 2;
+            vertices[count++] = WIDTH_SPAN / 2;
+            vertices[count++] = -HEIGHT_SPAN / 2 + heighSpan * i;
+            vertices[count++] = -WIDTH_SPAN / 2;
         }
         //创建顶点坐标数据缓冲
         //vertices.length*4是因为一个整数四个字节
@@ -75,7 +142,7 @@ public class SugarRect {
         mVertexBuffer.put(vertices);//向缓冲区中放入顶点坐标数据
         mVertexBuffer.position(0);//设置缓冲区起始位置
         //顶点纹理坐标数据的初始化================begin============================
-        float texCoor[] = generateTexCoor(HIGH_NUMS);
+        float texCoor[] = generateTexCoor();
         //创建顶点纹理坐标数据缓冲
         ByteBuffer cbb = ByteBuffer.allocateDirect(texCoor.length * 4);
         cbb.order(ByteOrder.nativeOrder());//设置字节顺序
@@ -99,10 +166,8 @@ public class SugarRect {
         maTexCoorHandle = GLES30.glGetAttribLocation(mProgram, "aTexCoor");
         //获取程序中总变换矩阵引用
         muMVPMatrixHandle = GLES30.glGetUniformLocation(mProgram, "uMVPMatrix");
-        //获取本帧起始角度属性引用
-        maStartAngleHandle = GLES30.glGetUniformLocation(mProgram, "uStartAngle");
-        //获取横向长度总跨度引用
-        muHeightSpanHandle = GLES30.glGetUniformLocation(mProgram, "uHeightSpan");
+        //获取程序中总扭曲角度跨度
+        uHeightSpanHandle = GLES30.glGetUniformLocation(mProgram, "uHeightSpan");
     }
 
     @SuppressLint("NewApi")
@@ -111,10 +176,6 @@ public class SugarRect {
         GLES30.glUseProgram(mProgram);
         //将最终变换矩阵传入shader程序
         GLES30.glUniformMatrix4fv(muMVPMatrixHandle, 1, false, MatrixState.getFinalMatrix(), 0);
-        //将本帧起始角度传入shader程序
-        GLES30.glUniform1f(maStartAngleHandle, currStartAngle);
-        //将横向长度总跨度传入shader程序
-        GLES30.glUniform1f(muHeightSpanHandle, HEIGHT_SPAN);
         //将顶点位置数据传入渲染管线
         GLES30.glVertexAttribPointer
                 (
@@ -138,36 +199,87 @@ public class SugarRect {
         //启用顶点位置、纹理坐标数据
         GLES30.glEnableVertexAttribArray(maPositionHandle);
         GLES30.glEnableVertexAttribArray(maTexCoorHandle);
+
         //绑定纹理
         GLES30.glActiveTexture(GLES30.GL_TEXTURE0);
         GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, texId);
+
+        GLES30.glUniform1f(uHeightSpanHandle , HEIGHT_SPAN);
+        try {
+            Thread.sleep(20);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
         GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, vCount);
     }
 
     //自动切分纹理产生纹理数组的方法
-    public float[] generateTexCoor(int bh) {
-        float[] result = new float[bh * 6 * 2];
-        float sizeh =1.0f / bh;//行数
+    public float[] generateTexCoor() {
+        int textureCount = HIGH_NUMS *4* 6;
+        float[] result = new float[textureCount * 2];
         int c = 0;
-        for (int i = 0; i < bh; i++) {
+        for (int i = 0; i < HIGH_NUMS; i++) {
+            //前面矩形
             result[c++] = 1.0f;
             result[c++] = 1.0f;
-
             result[c++] = 1.0f;
             result[c++] = 0.0f;
-
-            result[c++] = 0.0f;
-            result[c++] = 0.0f;
-
-
             result[c++] = 0.0f;
             result[c++] = 0.0f;
 
+            result[c++] = 1.0f;
+            result[c++] = 1.0f;
             result[c++] = 0.0f;
             result[c++] = 1.0f;
+            result[c++] = 0.0f;
+            result[c++] = 0.0f;
+
+            //后面矩形
+            result[c++] = 1.0f;
+            result[c++] = 1.0f;
+            result[c++] = 1.0f;
+            result[c++] = 0.0f;
+            result[c++] = 0.0f;
+            result[c++] = 0.0f;
 
             result[c++] = 1.0f;
             result[c++] = 1.0f;
+            result[c++] = 0.0f;
+            result[c++] = 1.0f;
+            result[c++] = 0.0f;
+            result[c++] = 0.0f;
+
+            //左面矩形
+            result[c++] = 1.0f;
+            result[c++] = 1.0f;
+            result[c++] = 1.0f;
+            result[c++] = 0.0f;
+            result[c++] = 0.0f;
+            result[c++] = 0.0f;
+
+            result[c++] = 1.0f;
+            result[c++] = 1.0f;
+            result[c++] = 0.0f;
+            result[c++] = 1.0f;
+            result[c++] = 0.0f;
+            result[c++] = 0.0f;
+
+            //右面矩形
+            result[c++] = 1.0f;
+            result[c++] = 1.0f;
+            result[c++] = 1.0f;
+            result[c++] = 0.0f;
+            result[c++] = 0.0f;
+            result[c++] = 0.0f;
+
+            result[c++] = 1.0f;
+            result[c++] = 1.0f;
+            result[c++] = 0.0f;
+            result[c++] = 1.0f;
+            result[c++] = 0.0f;
+            result[c++] = 0.0f;
         }
         return result;
     }
