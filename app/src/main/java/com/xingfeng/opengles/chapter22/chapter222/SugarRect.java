@@ -23,10 +23,10 @@ public class SugarRect {
     FloatBuffer mVertexBuffer;//顶点坐标数据缓冲
     FloatBuffer mTexCoorBuffer;//顶点纹理坐标数据缓冲
     int vCount = 0;
-    final float WIDTH_SPAN = 4.0f;//2.8f;//横向长度总跨度
-    final float HEIGHT_SPAN = 20.0f;//2.8f;//横向长度总跨度
+    final float WIDTH_SPAN = 0.575f;//2.8f;//横向长度总跨度
+    final float HEIGHT_SPAN = 3.0f;//纵向长度总跨度
     float currStartAngle = 0;//当前帧的起始角度0~2PI
-    int HIGH_NUMS = 100;
+    int HIGH_NUMS = 6;
 
     public SugarRect(View mv) {
         //初始化顶点坐标与着色数据
@@ -38,7 +38,7 @@ public class SugarRect {
     //初始化顶点坐标与着色数据的方法
     public void initVertexData() {
         //顶点坐标数据的初始化================begin============================
-        vCount = HIGH_NUMS * 6;//每个格子两个三角形，每个三角形3个顶点
+        vCount = HIGH_NUMS *4* 6;//每个格子两个三角形，每个三角形3个顶点
         float vertices[] = new float[vCount * 3];//每个顶点xyz三个坐标
         int count = 0;//顶点计数器
         for (int i = 0; i < HIGH_NUMS; i++) {

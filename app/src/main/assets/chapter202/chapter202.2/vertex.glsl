@@ -22,10 +22,13 @@ void main() {
     //根据横向角度总跨度、横向长度总跨度及当前点X坐标折算出当前顶点X坐标对应的角度
     float currAngle = uStartAngle + ((aPosition.y - startY) / uHeightSpan) * angleSpanH;
 
-    float tx = aPosition.x * cos(currAngle) - aPosition.z * sin(currAngle);
-    float tz = aPosition.z * cos(currAngle) + aPosition.x * sin(currAngle);
+    vec3 tPosition = aPosition;
+    if (aPosition.y > startY) {
+        tPosition.x = aPosition.x * cos(currAngle) - aPosition.z * sin(currAngle);
+        tPosition.z = aPosition.z * cos(currAngle) + aPosition.x * sin(currAngle);
+    }
 
     //根据总变换矩阵计算此次绘制顶点的位置
-    gl_Position = uMVPMatrix * vec4(tx, aPosition.y,tz, 1);
+    gl_Position = uMVPMatrix * vec4(tPosition, 1);
     vTextureCoord = aTexCoor;
 }
