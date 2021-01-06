@@ -16,7 +16,7 @@ void main() {
     //计算当前点变换后的Y坐标
     float result_height = bend_R*sin(curr_radian);
     //计算当前点的增加的长度
-    float increase = bend_R = bend_R*cos(curr_radian);
+    float increase = bend_R - bend_R*cos(curr_radian);
     //计算当前点最后的x坐标
     float result_X = aPosition.x + increase*sin(radians(direction_degree));
     //计算当前点最后的Z坐标
