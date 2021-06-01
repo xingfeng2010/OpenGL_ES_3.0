@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'customplugin'
+//apply plugin: 'customplugin'
 
 android {
     compileSdkVersion 29
