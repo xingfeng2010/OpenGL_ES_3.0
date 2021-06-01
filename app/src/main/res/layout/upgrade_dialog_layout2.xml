@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rocket_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cancel_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@android:color/transparent">
+
+            <ImageView
+                android:id="@+id/guideline"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginRight="30dp"
+                />
+
+            <ImageView
+                android:id="@+id/upgrade_cancel"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/upgrade_cancel"
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                app:layout_constraintEnd_toEndOf="@id/guideline"
+                app:layout_constraintTop_toBottomOf="@id/guideline"
+                />
+
+            <ImageView
+                android:id="@+id/upgrade_line"
+                android:layout_width="1dp"
+                android:layout_height="21dp"
+                android:background="@android:color/white"
+                app:layout_constraintStart_toStartOf="@id/upgrade_cancel"
+                app:layout_constraintEnd_toEndOf="@id/upgrade_cancel"
+                app:layout_constraintTop_toBottomOf="@id/upgrade_cancel"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <RelativeLayout
+            android:id="@+id/rocket_back_layout"
+            android:layout_width="match_parent"
+            android:layout_height="148dp"
+            android:background="@drawable/corner_white_top"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cancel_layout"
+            >
+            <ImageView
+                android:id="@+id/upgrade_bg_image"
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/upgrade_car_img"
+                android:scaleType="centerCrop"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/new_found_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rocket_back_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+            <TextView
+                android:id="@+id/new_found_tv"
+                android:text="发现新版本"
+                android:textColor="#4DB9C2"
+                android:textSize="18sp"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginBottom="18dp"
+                />
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:layout_below="@+id/rocket_layout"
+        android:id="@+id/webView_layout"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="130dp">
+        <WebView
+            android:id="@+id/webview_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/corner_white_bottom"
+        android:layout_below="@+id/webView_layout"
+        android:layout_gravity="bottom"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/positiveButton"
+            android:layout_width="190dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/custom_button_bg"
+            android:onClick="checkVoiceEnv"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="立即升级"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            />
+
+        <TextView
+            android:id="@+id/negativeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="暂不升级"
+            android:textColor="#666666"
+            android:textSize="12sp" />
+    </LinearLayout>
+</RelativeLayout>

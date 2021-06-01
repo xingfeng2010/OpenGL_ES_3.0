@@ -1,0 +1,32 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+/**定义工件的group、name 和 version*/
+group = 'com.changan.customplugin'
+archivesBaseName = 'customplugin'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation gradleApi() //gradle sdk
+    implementation localGroovy() //groovy sdk
+
+    implementation 'com.android.tools.build:gradle:3.0.1'
+    implementation 'com.android.tools.build:gradle-api:3.0.1'
+    // ASM 相关
+    implementation 'org.ow2.asm:asm:7.1'
+    implementation 'org.ow2.asm:asm-util:7.1'
+    implementation 'org.ow2.asm:asm-commons:7.1'
+}
+
+uploadArchives {
+    repositories {
+        /**配置Maven部署器，将工件上传到本地目录，这里是放到与该项目同级目录的repo目录下*/
+        mavenDeployer {
+            repository(url: "file://$projectDir/../repo")
+        }
+    }
+}

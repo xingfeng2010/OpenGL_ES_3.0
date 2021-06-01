@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.xingfeng.opengles.BaseListActivity;
 import com.xingfeng.opengles.chapter22.chapter221.Chapter221Activity;
 import com.xingfeng.opengles.chapter22.chapter222.Chapter222Activity;
+import com.xingfeng.opengles.chapter22.chapter223.Chapter223Activity;
 
 public class Chapter22Activity extends BaseListActivity {
 
