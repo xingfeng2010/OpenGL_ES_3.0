@@ -74,23 +74,15 @@ public class GL224SurfaceView extends GLSurfaceView {
             //保护现场
             MatrixState.pushMatrix();
             //坐标系推远
-            MatrixState.translate(0, -16f, -100f);
+            MatrixState.translate(0, -5f, -40f);
             //绕Y轴、X轴旋转
             MatrixState.rotate(yAngle, 0, 1, 0);
             MatrixState.rotate(xAngle, 1, 0, 0);
 
-            //绘制茶壶
-            MatrixState.pushMatrix();
-            MatrixState.translate(30, 0, 0);
-            lovo1.drawSelf(textureId);
-            MatrixState.popMatrix();
-
-            //绘制软管
-            MatrixState.pushMatrix();
-            MatrixState.translate(-30, 0, 0);
-            MatrixState.rotate(-90, 1, 0, 0);
-            lovo2.drawSelf(textureId);
-            MatrixState.popMatrix();
+            //若加载的物体部位空则绘制物体
+            if (glede1 != null) {
+                glede1.drawSelf(textureId);
+            }
 
             //恢复现场
             MatrixState.popMatrix();
@@ -102,28 +94,26 @@ public class GL224SurfaceView extends GLSurfaceView {
             //计算GLSurfaceView的宽高比
             float ratio = (float) width / height;
             //调用此方法计算产生透视投影矩阵
-            MatrixState.setProjectFrustum(-ratio, ratio, -1, 1, 2, 1000);
+            MatrixState.setProjectFrustum(-ratio, ratio, -1, 1, 2, 100);
             //调用此方法产生摄像机9参数位置矩阵
             MatrixState.setCamera(0,0,0,  0f,0f,-1f,  0f,1.0f,0.0f);
         }
 
+        private GledeForDraw glede1;
         public void onSurfaceCreated(GL10 gl, EGLConfig config)
         {
             //设置屏幕背景色RGBA
-            GLES30.glClearColor(0.0f,0.0f,0.0f,1.0f);
+            GLES30.glClearColor(0.0f,1.0f,1.0f,1.0f);
             //打开深度检测
             GLES30.glEnable(GLES30.GL_DEPTH_TEST);
             //打开背面剪裁
             GLES30.glEnable(GLES30.GL_CULL_FACE);
             //初始化变换矩阵
             MatrixState.setInitStack();
-            //初始化光源位置
-            MatrixState.setLightLocation(40, 10, 20);
-            //加载要绘制的物体
-            lovo1= LoadUtil.loadFromFile("chapter201/chapter201.1/ch_t.obj", GL224SurfaceView.this.getResources(), GL224SurfaceView.this);
-            lovo2=LoadUtil.loadFromFile("chapter201/chapter201.1/rg.obj", GL224SurfaceView.this.getResources(), GL224SurfaceView.this);
+
+            glede1 = new GledeForDraw(GL224SurfaceView.this);
             //加载纹理
-            textureId=initTexture(R.drawable.ghxp);
+            textureId=initTexture(R.drawable.ttt);
         }
     }
     public int initTexture(int drawableId)//textureId

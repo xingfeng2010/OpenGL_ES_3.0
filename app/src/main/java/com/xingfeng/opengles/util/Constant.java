@@ -22,6 +22,9 @@ public class Constant {
     public static String OBJ_VER_PATH = "";
     public static String OBJ_FRAG_PATH = "";
 
+    public static final float MAX_S_GHXP=1.0f;//国画小品最大S纹理坐标
+    public static final float MAX_T_GHXP=1.0f;//国画小品最大T纹理坐标
+
     //线程标志
     public static boolean flag_go=true;
 

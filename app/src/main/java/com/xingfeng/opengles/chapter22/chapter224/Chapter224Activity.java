@@ -11,7 +11,7 @@ public class Chapter224Activity extends GLRenderActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //初始化GLSurfaceView
-        super.setGLSurfaceView(new GL201SurfaceView(this));
+        super.setGLSurfaceView(new GL224SurfaceView(this));
 
         Constant.OBJ_VER_PATH = "chapter202/chapter202.4/vertex.glsl";
         Constant.OBJ_FRAG_PATH = "chapter202/chapter202.4/frag.glsl";
