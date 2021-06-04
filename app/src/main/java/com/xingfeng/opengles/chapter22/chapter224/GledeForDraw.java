@@ -40,7 +40,7 @@ public class GledeForDraw
     float span=0.15f;
     float bfbCurr=0f;
 
-    public GledeForDraw(GL224SurfaceView mv)
+    public GledeForDraw(View mv)
     {
         //初始化顶点数据
         initVertexData(mv);

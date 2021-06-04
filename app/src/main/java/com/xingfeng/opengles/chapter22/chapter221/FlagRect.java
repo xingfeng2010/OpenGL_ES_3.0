@@ -58,12 +58,18 @@ public class FlagRect
     public void initVertexData()
     {
         final int cols=12;//列数
-        final int rows=cols*3/4;//行数
+        final int rows=12;//行数
         final float UNIT_SIZE=WIDTH_SPAN/cols;//每格的单位长度
         //顶点坐标数据的初始化================begin============================
         vCount=cols*rows*6;//每个格子两个三角形，每个三角形3个顶点
         float vertices[]=new float[vCount*3];//每个顶点xyz三个坐标
         int count=0;//顶点计数器
+        for (int i = 0, nextCol = 1; i < cols && nextCol < cols; i ++,nextCol++) {
+
+
+        }
+
+
         for(int j=0;j<rows;j++)
         {
             for(int i=0;i<cols;i++)

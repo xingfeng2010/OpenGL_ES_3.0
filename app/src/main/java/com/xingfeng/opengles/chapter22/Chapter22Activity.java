@@ -7,6 +7,7 @@ import com.xingfeng.opengles.chapter22.chapter221.Chapter221Activity;
 import com.xingfeng.opengles.chapter22.chapter222.Chapter222Activity;
 import com.xingfeng.opengles.chapter22.chapter223.Chapter223Activity;
 import com.xingfeng.opengles.chapter22.chapter224.Chapter224Activity;
+import com.xingfeng.opengles.chapter22.chapter225.Chapter225Activity;
 
 public class Chapter22Activity extends BaseListActivity {
 
@@ -14,7 +15,8 @@ public class Chapter22Activity extends BaseListActivity {
             Chapter221Activity.class,
             Chapter222Activity.class,
             Chapter223Activity.class,
-            Chapter224Activity.class
+            Chapter224Activity.class,
+            Chapter225Activity.class
     };
 
 
@@ -22,7 +24,8 @@ public class Chapter22Activity extends BaseListActivity {
             "飘扬的旗帜",
             "扭动的软糖",
             "风吹椰林场景开发",
-            "展翅的雄鹰"
+            "展翅的雄鹰",
+            "二维扭曲"
     };
 
     @Override

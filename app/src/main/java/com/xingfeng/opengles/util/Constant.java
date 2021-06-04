@@ -25,6 +25,11 @@ public class Constant {
     public static final float MAX_S_GHXP=1.0f;//国画小品最大S纹理坐标
     public static final float MAX_T_GHXP=1.0f;//国画小品最大T纹理坐标
 
+    //三角形边长
+    public static float triangle_edgeLength=8f;
+    //三角形组层数
+    public static int triangle_levelNum=40;
+
     //线程标志
     public static boolean flag_go=true;
 
@@ -44,6 +49,7 @@ public class Constant {
     public static float bend_R_max=5000;
     public static float bend_R=bend_R_max;//这里指的是节点圆柱中心到弯曲中心处的长度
     public static float wind_direction=0;//这里指的是风向的角度
+
     public static void setWindForce(int windForce)//根据风力级数设置加速度和线程休眠时间
     {
         wind=windForce;
