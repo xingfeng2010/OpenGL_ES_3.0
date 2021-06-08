@@ -72,6 +72,7 @@
         <activity android:name=".chapter22.chapter223.Chapter223Activity"/>
         <activity android:name=".chapter22.chapter224.Chapter224Activity"/>
         <activity android:name=".chapter22.chapter225.Chapter225Activity"/>
+        <activity android:name=".chapter22.chapter226.Chapter226Activity"/>
 
         <activity android:name=".StartMainActivity">
             <intent-filter>
