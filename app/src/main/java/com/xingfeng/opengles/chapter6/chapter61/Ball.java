@@ -6,6 +6,7 @@ import android.opengl.GLES30;
 import android.os.Build;
 import android.view.View;
 
+import com.xingfeng.opengles.util.Constant;
 import com.xingfeng.opengles.util.MatrixState;
 import com.xingfeng.opengles.util.ShaderUtil;
 
@@ -26,9 +27,9 @@ public class Ball {
 
     FloatBuffer mVertexBuffer;// 顶点坐标数据缓冲
     int vCount = 0;
-    float yAngle = 0;// 绕y轴旋转的角度
-    float xAngle = 0;// 绕x轴旋转的角度
-    float zAngle = 0;// 绕z轴旋转的角度
+    public float yAngle = 0;// 绕y轴旋转的角度
+    public float xAngle = 0;// 绕x轴旋转的角度
+    public float zAngle = 0;// 绕z轴旋转的角度
     float r = 0.8f;
 
     private float UNIT_SIZE = 0.3f;
@@ -128,9 +129,9 @@ public class Ball {
     // 初始化着色器
     public void initShader(View mv) {
         // 加载顶点着色器的脚本内容
-        mVertexShader = ShaderUtil.loadFromAssetsFile("chapter6/chapter6.1/vertex.glsl",mv.getResources());
+        mVertexShader = ShaderUtil.loadFromAssetsFile(Constant.OBJ_VER_PATH, mv.getResources());
         // 加载片元着色器的脚本内容
-        mFragmentShader = ShaderUtil.loadFromAssetsFile("chapter6/chapter6.1/frag.glsl",mv.getResources());
+        mFragmentShader = ShaderUtil.loadFromAssetsFile(Constant.OBJ_FRAG_PATH, mv.getResources());
         // 基于顶点着色器与片元着色器创建程序
         mProgram = ShaderUtil.createProgram(mVertexShader, mFragmentShader);
         // 获取程序中顶点位置属性引用

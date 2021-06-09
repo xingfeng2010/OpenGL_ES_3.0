@@ -18,8 +18,6 @@ public class BaseListActivity extends AppCompatActivity {
 
     private String[] classDescription = new String[] {};
 
-
-
     protected void setData(Class[] classes, String[] classDescription) {
         this.classes = classes;
         this.classDescription = classDescription;
