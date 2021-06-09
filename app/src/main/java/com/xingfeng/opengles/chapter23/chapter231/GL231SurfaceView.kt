@@ -5,7 +5,6 @@ import android.opengl.GLES30
 import android.opengl.GLSurfaceView
 import android.view.MotionEvent
 import android.view.View
-import com.xingfeng.opengles.chapter6.chapter61.Ball
 import com.xingfeng.opengles.util.Constant
 import com.xingfeng.opengles.util.MatrixState
 import javax.microedition.khronos.egl.EGLConfig
@@ -30,12 +29,12 @@ class GL231SurfaceView(context: Context): GLSurfaceView(context) {
 
     class SceneRenderer(view:View): Renderer {
         private var mView:View = view
-         lateinit var ball: Ball
+         lateinit var ball: Ball231
 
         override fun onSurfaceCreated(gl: GL10, config: EGLConfig) {
             //设置屏幕背景色RGBA
             GLES30.glClearColor(0f, 0f, 0f, 1.0f)
-            ball = Ball(mView)
+            ball = Ball231(mView)
             //打开深度检测
             GLES30.glEnable(GLES30.GL_DEPTH_TEST)
             //打开背面剪裁

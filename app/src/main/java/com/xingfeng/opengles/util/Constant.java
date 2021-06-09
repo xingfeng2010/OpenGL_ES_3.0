@@ -34,9 +34,9 @@ public class Constant {
     public static boolean flag_go=true;
 
     //单位宽度值
-    public static final float UNIT_SIZE=100;
+    public static float UNIT_SIZE=100;
     //太阳光的位置
-    public static final float[] sunPosition=
+    public static float[] sunPosition=
             {
                     UNIT_SIZE*31*1.5f, 1000, UNIT_SIZE*31*1.2f
             };
@@ -122,14 +122,14 @@ public class Constant {
     }
     //摄像机参数
     public static float DISTANCE=3000.0f;//摄像机位置距离观察目标点的距离4700--600
-    public static final float CAMERA_X=UNIT_SIZE*31*1.5f;//摄像机的观察点
-    public static final float CAMERA_HEIGHT=80;//摄像机的高度
-    public static final float CAMERA_Z=UNIT_SIZE*31*1.5f;//摄像机的观察点
+    public static  float CAMERA_X=UNIT_SIZE*31*1.5f;//摄像机的观察点
+    public static  float CAMERA_HEIGHT=80;//摄像机的高度
+    public static  float CAMERA_Z=UNIT_SIZE*31*1.5f;//摄像机的观察点
     public static float camera_direction=225;//摄像机的观察方向//摄像机的方向角初始方向是Z州的负方向,逆时针旋转
     public static final float MOVE_SPAN=20f;//摄像机每次移动的位移
     //海底的相关参数
-    public static final float FLOOR_WIDTH=UNIT_SIZE*31;//海底的宽度
-    public static final float FLOOR_HEIGHT=UNIT_SIZE*31;//海底的高度
+    public static  float FLOOR_WIDTH=UNIT_SIZE*31;//海底的宽度
+    public static  float FLOOR_HEIGHT=UNIT_SIZE*31;//海底的高度
     public static final float[][] floor_array=//绘制山地的区域0表示海底1表示高山
             {
                     {0,0,0},

@@ -11,6 +11,7 @@ import com.xingfeng.opengles.util.Constant;
         super.onCreate(savedInstanceState);
         //初始化GLSurfaceView
         super.setGLSurfaceView(new GL231SurfaceView(this));
+        Constant.UNIT_SIZE=1f;
         Constant.OBJ_VER_PATH = "chapter301/chapter301.1/vertex.glsl";
         Constant.OBJ_FRAG_PATH = "chapter301/chapter301.1/frag.glsl";
     }
