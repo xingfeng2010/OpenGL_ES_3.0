@@ -3,6 +3,7 @@ package com.xingfeng.opengles.chapter23.chapter231
 import android.content.Context
 import android.opengl.GLES30
 import android.opengl.GLSurfaceView
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import com.xingfeng.opengles.util.Constant
@@ -26,8 +27,26 @@ class GL231SurfaceView(context: Context): GLSurfaceView(context) {
     }
 
 
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        var x = event.x
+        var y = event.y
 
-    class SceneRenderer(view:View): Renderer {
+        when (event.action) {
+            MotionEvent.ACTION_MOVE -> {
+                var dx = x - mPreviousX
+                var dy = y - mPreviousY
+
+                mRenderer.ball.yAngle += dx * TOUCH_SCAL_FACTOR
+                mRenderer.ball.xAngle += dy * TOUCH_SCAL_FACTOR
+            }
+        }
+
+        mPreviousX = x
+        mPreviousY= y
+        return true
+    }
+
+    class SceneRenderer(view: View): Renderer {
         private var mView:View = view
          lateinit var ball: Ball231
 
@@ -59,24 +78,5 @@ class GL231SurfaceView(context: Context): GLSurfaceView(context) {
             //初始化变换矩阵
             MatrixState.setInitStack()
         }
-    }
-
-    override fun onTouchEvent(event: MotionEvent): Boolean {
-        var x = event.x
-        var y = event.y
-
-        when (event.action) {
-            MotionEvent.ACTION_MOVE -> {
-                var dx = x - mPreviousX
-                var dy = y - mPreviousY
-
-                mRenderer.ball.yAngle += dx * TOUCH_SCAL_FACTOR
-                mRenderer.ball.xAngle += dy * TOUCH_SCAL_FACTOR
-            }
-        }
-
-        mPreviousX = x
-        mPreviousY= y
-        return super.onTouchEvent(event)
     }
 }
