@@ -6,6 +6,13 @@ out vec4 fFragColor;//输出的片元颜色
 
 const vec2 texSize = vec2(1920, 1080);
 
+/*
+浮雕效果是指图像的前景前向凸出背景。
+实现思路：把图象的一个象素和左上方的象素进行求差运算，
+并加上一个灰度。这个灰度就是表示背景颜色。
+这里我们设置这个插值为128 (图象RGB的值是0-255)。
+同时,我们还应该把这两个颜色的差值转换为亮度信息，避免浮雕图像出现彩色像素。
+*/
 void main() {
     vec2 tex = vTextureCoord;
     vec2 upLeftUV = vec2(tex.x - 1.0 / texSize.x, tex.y - 1.0/texSize.y);

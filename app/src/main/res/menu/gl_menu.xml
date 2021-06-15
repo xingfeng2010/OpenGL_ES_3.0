@@ -13,4 +13,18 @@
         android:id="@+id/fudiaoEffect"
         android:title="浮雕效果"
         app:showAsAction="never"></item>
+    <item
+        android:id="@+id/huiduEffect"
+        android:title="灰度图"
+        app:showAsAction="never"></item>
+    <item
+        android:id="@+id/updownEffect"
+        android:title="上下颠倒"
+        app:showAsAction="never"></item>
+    <item android:id="@+id/whirlpoolEffect"
+        android:title="漩涡效果"
+        app:showAsAction="never"></item>
+    <item android:id="@+id/masaikeEffect"
+        android:title="马赛克效果"
+        app:showAsAction="never"></item>
 </menu>

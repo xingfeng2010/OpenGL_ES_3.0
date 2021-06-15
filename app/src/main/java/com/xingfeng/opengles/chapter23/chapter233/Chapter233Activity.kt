@@ -44,6 +44,22 @@ open class Chapter233Activity : GLRenderActivity() {
             R.id.fudiaoEffect -> {
                 Constant.SELECT_FRAG_PATH = "chapter301/chapter301.3/frag_fudiao.glsl"
             }
+
+            R.id.huiduEffect -> {
+                Constant.SELECT_FRAG_PATH = "chapter301/chapter301.3/frag_huidu.glsl"
+            }
+
+            R.id.updownEffect -> {
+                Constant.SELECT_FRAG_PATH = "chapter301/chapter301.3/frag_updown.glsl"
+            }
+
+            R.id.whirlpoolEffect -> {
+                Constant.SELECT_FRAG_PATH = "chapter301/chapter301.3/frag_whirlpool.glsl"
+            }
+
+            R.id.masaikeEffect -> {
+                Constant.SELECT_FRAG_PATH = "chapter301/chapter301.3/frag_masaike.glsl"
+            }
         }
 
         mGL233SurfaceView.switchProgram()
