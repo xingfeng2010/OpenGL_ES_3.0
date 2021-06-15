@@ -27,4 +27,13 @@
     <item android:id="@+id/masaikeEffect"
         android:title="马赛克效果"
         app:showAsAction="never"></item>
+    <item android:id="@+id/sepiaEffect"
+        android:title="老照片效果"
+        app:showAsAction="never"></item>
+    <item android:id="@+id/negativeEffect"
+        android:title="反相效果"
+        app:showAsAction="never"></item>
+    <item android:id="@+id/gaosiEffect"
+        android:title="高斯模糊效果"
+        app:showAsAction="never"></item>
 </menu>

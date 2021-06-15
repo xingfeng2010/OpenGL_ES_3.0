@@ -60,6 +60,14 @@ open class Chapter233Activity : GLRenderActivity() {
             R.id.masaikeEffect -> {
                 Constant.SELECT_FRAG_PATH = "chapter301/chapter301.3/frag_masaike.glsl"
             }
+
+            R.id.negativeEffect -> {
+                Constant.SELECT_FRAG_PATH = "chapter301/chapter301.3/frag_negative.glsl"
+            }
+
+            R.id.gaosiEffect -> {
+                Constant.SELECT_FRAG_PATH = "chapter301/chapter301.3/frag_gaosi.glsl"
+            }
         }
 
         mGL233SurfaceView.switchProgram()
