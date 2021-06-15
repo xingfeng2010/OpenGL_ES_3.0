@@ -51,6 +51,10 @@ class GL233SurfaceView(context: Context) : GLSurfaceView(context) {
         return true
     }
 
+    fun switchProgram() {
+        mRenderer.textureRectLB.switchProgram()
+    }
+
     class SceneRenderer(view: View) : Renderer {
         private var mView: View = view
         lateinit var textureRect: TextureRect233
@@ -73,7 +77,7 @@ class GL233SurfaceView(context: Context) : GLSurfaceView(context) {
             MatrixState.setInitStack()
             textureRect = TextureRect233(mView, 17.0f, 17.0f, 1.0f, 1.0f, false)
             textureRectLB = TextureRect233(mView, 17.0f, 17.0f, 1.0f, 1.0f, true)
-            textureId = Constant.initTexture(mView.resources, R.drawable.jinyu)
+            textureId = Constant.initTexture(mView.resources, R.drawable.castle)
         }
 
         override fun onDrawFrame(gl: GL10) {
@@ -81,14 +85,14 @@ class GL233SurfaceView(context: Context) : GLSurfaceView(context) {
 
             //清除深度缓冲与颜色缓冲
             GLES30.glClear(GLES30.GL_DEPTH_BUFFER_BIT or GLES30.GL_COLOR_BUFFER_BIT)
-            MatrixState.pushMatrix()
-            MatrixState.translate(-9f+ textureRect.xAngle, 0f, 0f)
-            textureRect.drawSelf(textureId) //平面
+//            MatrixState.pushMatrix()
+//            MatrixState.translate(-9f+ textureRect.xAngle, 0f, 0f)
+//            textureRect.drawSelf(textureId) //平面
+//
+//            MatrixState.popMatrix()
 
-            MatrixState.popMatrix()
-
             MatrixState.pushMatrix()
-            MatrixState.translate(9f + textureRect.xAngle, 0f, 0f)
+//            MatrixState.translate(9f + textureRect.xAngle, 0f, 0f)
             textureRectLB.drawSelf(textureId) //平面
 
             MatrixState.popMatrix()

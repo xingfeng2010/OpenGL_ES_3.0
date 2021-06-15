@@ -15,14 +15,12 @@ public class BaseListActivity extends AppCompatActivity {
     private ListView mListView;
     private LayoutInflater mLayoutInflator;
     private Class[] classes = new Class[]{ };
-
     private String[] classDescription = new String[] {};
 
     protected void setData(Class[] classes, String[] classDescription) {
         this.classes = classes;
         this.classDescription = classDescription;
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

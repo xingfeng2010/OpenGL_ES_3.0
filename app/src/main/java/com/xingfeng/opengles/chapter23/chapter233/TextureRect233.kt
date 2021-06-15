@@ -42,23 +42,25 @@ class TextureRect233(
     var xAngle = 0f //绕x轴旋转的角度
     var zAngle = 0f //绕z轴旋转的角度
 
+    lateinit var mView: View
+
     init {
         this.width = width
         this.height = height
         this.sEnd = sEnd
         this.tEnd = tEnd
-        
+
+        mView = view
+
         initVertexData()
         initShader(view, userLB)
     }
 
     private fun initShader(view: View, userLB: Boolean) {
         if (userLB) {
-            Constant.OBJ_VER_PATH = "chapter301/chapter301.3/vertex.glsl"
-            Constant.OBJ_FRAG_PATH = "chapter301/chapter301.3/frag.glsl"
+            Constant.OBJ_FRAG_PATH = Constant.SELECT_FRAG_PATH
         } else {
-            Constant.OBJ_VER_PATH = "chapter301/chapter301.3/vertexlb.glsl"
-            Constant.OBJ_FRAG_PATH = "chapter301/chapter301.3/fraglb.glsl"
+            Constant.OBJ_FRAG_PATH = "chapter301/chapter301.3/frag.glsl"
         }
         mVertexShader = ShaderUtil.loadFromAssetsFile(Constant.OBJ_VER_PATH, view.resources)
         mFragmentShader = ShaderUtil.loadFromAssetsFile(Constant.OBJ_FRAG_PATH, view.resources)
@@ -102,6 +104,10 @@ class TextureRect233(
 
     fun drawSelf(texId: Int) {
         //指定使用某套着色器程序
+        if (needSwitch) {
+           initShader(mView, true)
+            needSwitch = false
+        }
 
 //        MatrixState.rotate(xAngle, 1.0f, 0.0f, 0.0f)
 //        MatrixState.rotate(yAngle, 0.0f, 1.0f, 0.0f)
@@ -148,5 +154,11 @@ class TextureRect233(
         //绘制矩形
         //绘制矩形
         GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, vCount)
+    }
+
+    var needSwitch = false;
+
+    fun switchProgram() {
+        needSwitch = true
     }
 }
