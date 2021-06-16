@@ -61,6 +61,10 @@ open class Chapter233Activity : GLRenderActivity() {
                 Constant.SELECT_FRAG_PATH = "chapter301/chapter301.3/frag_masaike.glsl"
             }
 
+            R.id.sepiaEffect -> {
+                Constant.SELECT_FRAG_PATH = "chapter301/chapter301.3/frag_sepia.glsl"
+            }
+
             R.id.negativeEffect -> {
                 Constant.SELECT_FRAG_PATH = "chapter301/chapter301.3/frag_negative.glsl"
             }
