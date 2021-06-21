@@ -9,10 +9,10 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import com.xingfeng.opengles.R
-import com.xingfeng.opengles.util.Constant
-import com.xingfeng.opengles.util.LoadedObjectVertexNormalTexture
-import com.xingfeng.opengles.util.MatrixState
-import com.xingfeng.opengles.util.ScreentUtil
+import com.xingfeng.opengles.chapter23.chapter2314.ParticleDataConstant.CURR_INDEX
+import com.xingfeng.opengles.chapter23.chapter2314.ParticleDataConstant.RADIS
+import com.xingfeng.opengles.util.*
+import com.xingfeng.opengles.util.Constant.initTexture
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,54 +22,18 @@ import javax.microedition.khronos.opengles.GL10
 
 class GL2314SurfaceView(context: Context) : GLSurfaceView(context) {
     private var mRenderer: SceneRenderer
-    var fps: List<ParticleSystem> = emptyList()
-    var fdfd = emptyArray<ParticleForDraw>()
-    lateinit var wallsForDraw: WallsForwDraw
-    lateinit var brazier: LoadedObjectVertexNormalTexture
 
     private var Offset = 20.0f
 
     // 视线方向
     private var direction: Float = 0.0f
 
-    // 摄像机x坐标
-    private var cx: Float = 0.0f
-
-    //摄像机y坐标
-    private var cy: Float = 0.0f
-
-    //摄像机z坐标
-    private var cz: Float = 0.0f
-
-    //观察目标点x坐标
-    private var tx: Float = 0.0f
-
-    //观察目标点y坐标
-    private var ty: Float = 0.0f
-
-    //观察目标点z坐标
-    private var tz: Float = 0.0f
-    private var ux: Float = -cx
-
-    //观察目标点y坐标
-    private var uy = Math.abs((cx * tx + cz * tz - cz * cz) / (ty - cy));
-
-    //观察目标点z坐标
-    private var uz = -cz
     private val DEGREE_SPAN: Float = 3.0.toFloat() / (180.0f * Math.PI).toFloat()
 
     private val TOUCH_SCAL_FACTOR = 180.0f / 320
 
     private var mPreviousY: Float = 0.0f
     private var mPreviousX: Float = 0.0f
-
-    // 系统火焰分配的纹理id
-    private var textureIdFire = 0
-
-    //系统火盆分配的纹理id
-    private var textureIdbrazier = 0
-
-    private var count = 0
 
     //线程循环的标志位
     private var flag = true
@@ -140,46 +104,127 @@ class GL2314SurfaceView(context: Context) : GLSurfaceView(context) {
 
 
     class SceneRenderer(view: View) : Renderer {
-        private var mView: View = view
+        // 摄像机x坐标
+        companion object {
+            var cx: Float = 0.0f
 
-        //        lateinit var textureRect: TextureRect233
-//        lateinit var textureRectLB: TextureRect233
+            //摄像机z坐标
+            var cz: Float = 0.0f
+        }
+
+
+        //摄像机y坐标
+        private var cy: Float = 0.0f
+
+
+        //观察目标点x坐标
+        private var tx: Float = 0.0f
+
+        //观察目标点y坐标
+        private var ty: Float = 0.0f
+
+        //观察目标点z坐标
+        private var tz: Float = 0.0f
+        private var ux: Float = -cx
+
+        //观察目标点y坐标
+        private var uy = Math.abs((cx * tx + cz * tz - cz * cz) / (ty - cy));
+
+        //观察目标点z坐标
+        private var uz = -cz
+
+        private var mView: View = view
+        private var count = 0
+        private var timeStart = System.nanoTime()
+
+        lateinit var wallsForDraw: WallsForwDraw
+        lateinit var brazier: LoadedObjectVertexNormalTexture
+
+        var fps = mutableListOf<ParticleSystem>()
+        var fpfd = emptyArray<ParticleForDraw?>()
         var textureId = 0
 
-        override fun onSurfaceCreated(gl: GL10, config: EGLConfig) {
-            //设置屏幕背景色RGBA
 
+        // 系统火焰分配的纹理id
+        private var textureIdFire = 0
+
+        //系统火盆分配的纹理id
+        private var textureIdbrazier = 0
+
+        override fun onSurfaceCreated(gl: GL10, config: EGLConfig) {
+            //初始化纹理坐标
+
+            //初始化纹理坐标
+            for (i in 0 until ParticleDataConstant.walls.size) {
+                ParticleDataConstant.walls[i] = initTexture(mView.resources, R.drawable.wall0 + i)
+            }
+            textureIdbrazier = initTexture(mView.resources, R.drawable.brazier)
+            count = ParticleDataConstant.START_COLOR.size
+            fpfd = arrayOfNulls<ParticleForDraw>(count) //4组绘制着，4种颜色
+
+            //创建粒子系统
+            //创建粒子系统
+            for (i in 0 until count) {
+                ParticleDataConstant.CURR_INDEX = i
+                fpfd[i] = ParticleForDraw(mView, RADIS.get(CURR_INDEX))
+                //创建对象,将火焰的初始位置传给构造器
+                fps.add(ParticleSystem(ParticleDataConstant.positionFireXZ[i][0], ParticleDataConstant.positionFireXZ[i][1], fpfd[i], ParticleDataConstant.COUNT.get(i)))
+            }
+            wallsForDraw = WallsForwDraw(mView)
+            //加载要绘制的物体
+            //加载要绘制的物体
+            brazier = LoadUtil.loadFromFile("chapter301/chapter301.14/brazier.obj", mView.getResources(), mView)
             //设置屏幕背景色RGBA
-            GLES30.glClearColor(1f, 1.0f, 1.0f, 1.0f)
+            //设置屏幕背景色RGBA
+            GLES30.glClearColor(0.6f, 0.3f, 0.0f, 1.0f)
             //打开深度检测
             //打开深度检测
             GLES30.glEnable(GLES30.GL_DEPTH_TEST)
-            //打开背面剪裁
-            //打开背面剪裁
-            GLES30.glEnable(GLES30.GL_CULL_FACE)
-            //初始化变换矩阵
-            //初始化变换矩阵
-            MatrixState.setInitStack()
-//            textureRect = TextureRect233(mView, 17.0f, 17.0f, 1.0f, 1.0f, false)
-//            textureRectLB = TextureRect233(mView, 17.0f, 17.0f, 1.0f, 1.0f, true)
-            textureId = Constant.initTexture(mView.resources, R.drawable.castle)
+            //初始化纹理
+            //初始化纹理
+            textureIdFire = Constant.initTexture(mView.resources, R.drawable.fire)
+            //关闭背面剪裁
+            //关闭背面剪裁
+            GLES30.glDisable(GLES30.GL_CULL_FACE)
         }
 
         override fun onDrawFrame(gl: GL10) {
+            when (count) {
+                19 -> {
+                    var timeEnd = System.nanoTime()
+
+                    //计算帧速率
+                    var ps = (1000000000.0 / ((timeEnd - timeStart) / 20));
+                    Log.i("DEBUG_TEST", "帧率是 pss = $ps")
+                    count = 0
+                    timeStart = timeEnd
+                }
+            }
+
             //清除深度缓冲与颜色缓冲
 
             //清除深度缓冲与颜色缓冲
             GLES30.glClear(GLES30.GL_DEPTH_BUFFER_BIT or GLES30.GL_COLOR_BUFFER_BIT)
-//            MatrixState.pushMatrix()
-//            MatrixState.translate(-9f+ textureRect.xAngle, 0f, 0f)
-//            textureRect.drawSelf(textureId) //平面
-//
-//            MatrixState.popMatrix()
-
             MatrixState.pushMatrix()
-//            MatrixState.translate(9f + textureRect.xAngle, 0f, 0f)
-            //textureRectLB.drawSelf(textureId) //平面
-
+            //绘制墙体
+            //绘制墙体
+            //wallsForDraw.drawSelf()
+            MatrixState.translate(0f, 2.5f, 0f)
+            for (i in 0 until count) {
+                MatrixState.pushMatrix()
+                MatrixState.translate(ParticleDataConstant.positionBrazierXZ.get(i).get(0), -2f, ParticleDataConstant.positionBrazierXZ.get(i).get(1))
+                //若加载的物体部位空则绘制物体
+                if (brazier != null) {
+                    brazier.drawSelf(textureIdbrazier)
+                }
+                MatrixState.popMatrix()
+            }
+            MatrixState.translate(0f, 0.65f, 0f)
+            for (i in 0 until count) {
+                MatrixState.pushMatrix()
+                fps.get(i).drawSelf(textureIdFire)
+                MatrixState.popMatrix()
+            }
             MatrixState.popMatrix()
         }
 
@@ -191,12 +236,18 @@ class GL2314SurfaceView(context: Context) : GLSurfaceView(context) {
             //计算GLSurfaceView的宽高比
             //计算GLSurfaceView的宽高比
             val ratio = width.toFloat() / height
-            //设置camera位置
-            //设置camera位置
-            MatrixState.setCamera(0f, 0f, 20f, 0f, 0f, 0f, 0f, 1f, 0f)
             //调用此方法计算产生透视投影矩阵
             //调用此方法计算产生透视投影矩阵
-            MatrixState.setProjectFrustum(-ratio, ratio, -1f, 1f, 2f, 100f)
+            MatrixState.setProjectFrustum(-0.3f * ratio, 0.3f * ratio, -1 * 0.3f, 1 * 0.3f, 1f, 100f)
+            //调用此方法产生摄像机9参数位置矩阵
+            //调用此方法产生摄像机9参数位置矩阵
+            MatrixState.setCamera(cx, cy, cz, tx, ty, tz, ux, uy, uz)
+            //初始化变换矩阵
+            //初始化变换矩阵
+            MatrixState.setInitStack()
+            //初始化光源位置
+            //初始化光源位置
+            MatrixState.setLightLocation(0f, 15f, 0f)
         }
     }
 }
