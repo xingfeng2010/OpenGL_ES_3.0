@@ -69,44 +69,44 @@ class GL2314SurfaceView(context: Context) : GLSurfaceView(context) {
         var x = event.x
         var y = event.y
 
-        when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                flag = true
-                CoroutineScope(Dispatchers.IO).launch {
-                    while (flag) {
-                        if (x > WIDTH / 4 && x < 3 * WIDTH / 4 && attr.y > 0 && attr.y < HEIGHT / 2) {    //向前
-                            if (Math.abs(Offset - 0.5f) > 25 || Math.abs(Offset - 0.5f) < 15) {
-
-                            } else {
-                                Offset = Offset - 0.5f
-                            }
-                        } else if (x > WIDTH / 4 && x < 3 * WIDTH / 4 && attr.y > HEIGHT / 2 && attr.y < HEIGHT) {    //向后
-                            if (Math.abs(Offset + 0.5f) > 25 || Math.abs(Offset + 0.5f) < 15) {
-
-                            } else {
-                                Offset = Offset + 0.5f
-                            }
-                        } else if (x < WIDTH / 4) {
-                            //顺时针旋转
-                            direction = direction - DEGREE_SPAN
-                        } else if (x > WIDTH / 4) {
-                            //逆时针旋转
-                            direction = direction + DEGREE_SPAN
-                        }
-                        try {
-                            Thread.sleep(100)
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
-                    }
-                }
-
-            }
-
-            MotionEvent.ACTION_UP -> {
-                flag=false
-            }
-        }
+//        when (event.action) {
+//            MotionEvent.ACTION_DOWN -> {
+//                flag = true
+//                CoroutineScope(Dispatchers.IO).launch {
+//                    while (flag) {
+//                        if (x > WIDTH / 4 && x < 3 * WIDTH / 4 && attr.y > 0 && attr.y < HEIGHT / 2) {    //向前
+//                            if (Math.abs(Offset - 0.5f) > 25 || Math.abs(Offset - 0.5f) < 15) {
+//
+//                            } else {
+//                                Offset = Offset - 0.5f
+//                            }
+//                        } else if (x > WIDTH / 4 && x < 3 * WIDTH / 4 && attr.y > HEIGHT / 2 && attr.y < HEIGHT) {    //向后
+//                            if (Math.abs(Offset + 0.5f) > 25 || Math.abs(Offset + 0.5f) < 15) {
+//
+//                            } else {
+//                                Offset = Offset + 0.5f
+//                            }
+//                        } else if (x < WIDTH / 4) {
+//                            //顺时针旋转
+//                            direction = direction - DEGREE_SPAN
+//                        } else if (x > WIDTH / 4) {
+//                            //逆时针旋转
+//                            direction = direction + DEGREE_SPAN
+//                        }
+//                        try {
+//                            Thread.sleep(100)
+//                        } catch (e: Exception) {
+//                            e.printStackTrace()
+//                        }
+//                    }
+//                }
+//
+//            }
+//
+//            MotionEvent.ACTION_UP -> {
+//                flag=false
+//            }
+//        }
 
         //设置新的观察目标点XZ坐标
 
@@ -131,7 +131,7 @@ class GL2314SurfaceView(context: Context) : GLSurfaceView(context) {
         SceneRenderer.fps.sort()
         //重新设置摄像机的位置
         //重新设置摄像机的位置
-        MatrixState.setCamera(cx, cy, cz, tx, ty, tz, ux, uy, uz)
+       // MatrixState.setCamera(cx, cy, cz, tx, ty, tz, ux, uy, uz)
         //根据粒子与摄像机的距离进行排序
         //根据粒子与摄像机的距离进行排序
         return true
@@ -149,7 +149,7 @@ class GL2314SurfaceView(context: Context) : GLSurfaceView(context) {
             var cy: Float = 18.0f
 
             //摄像机z坐标
-            var cz: Float = 20.0f
+            var cz: Float = 50.0f
 
 
             //观察目标点x坐标
