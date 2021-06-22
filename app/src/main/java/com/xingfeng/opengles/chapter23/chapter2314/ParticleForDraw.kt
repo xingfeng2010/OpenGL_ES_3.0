@@ -63,14 +63,14 @@ class ParticleForDraw(view: View, halfSize: Float) {
 
         //创建顶点坐标数据缓冲
         //vertices.length*4是因为一个整数四个字节
-        val mVertexBuffer = ByteBuffer.allocateDirect(points.size * 4).run {
+        mVertexBuffer = ByteBuffer.allocateDirect(points.size * 4).run {
             order(ByteOrder.nativeOrder()) //设置字节顺序
             asFloatBuffer()
         }
 
-        mVertexBuffer.let {
-            it.put(points) //向缓冲区中放入顶点坐标数据
-            it.position(0) //设置缓冲区起始位置
+        mVertexBuffer?.run {
+            put(points) //向缓冲区中放入顶点坐标数据
+            position(0) //设置缓冲区起始位置
         }
 
         //特别提示：由于不同平台字节顺序不同数据单元不是字节的一定要经过ByteBuffer

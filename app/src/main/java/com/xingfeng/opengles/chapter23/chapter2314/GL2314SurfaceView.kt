@@ -9,6 +9,16 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import com.xingfeng.opengles.R
+import com.xingfeng.opengles.chapter23.chapter2314.GL2314SurfaceView.SceneRenderer.Companion.count
+import com.xingfeng.opengles.chapter23.chapter2314.GL2314SurfaceView.SceneRenderer.Companion.cx
+import com.xingfeng.opengles.chapter23.chapter2314.GL2314SurfaceView.SceneRenderer.Companion.cy
+import com.xingfeng.opengles.chapter23.chapter2314.GL2314SurfaceView.SceneRenderer.Companion.cz
+import com.xingfeng.opengles.chapter23.chapter2314.GL2314SurfaceView.SceneRenderer.Companion.tx
+import com.xingfeng.opengles.chapter23.chapter2314.GL2314SurfaceView.SceneRenderer.Companion.ty
+import com.xingfeng.opengles.chapter23.chapter2314.GL2314SurfaceView.SceneRenderer.Companion.tz
+import com.xingfeng.opengles.chapter23.chapter2314.GL2314SurfaceView.SceneRenderer.Companion.ux
+import com.xingfeng.opengles.chapter23.chapter2314.GL2314SurfaceView.SceneRenderer.Companion.uy
+import com.xingfeng.opengles.chapter23.chapter2314.GL2314SurfaceView.SceneRenderer.Companion.uz
 import com.xingfeng.opengles.chapter23.chapter2314.ParticleDataConstant.CURR_INDEX
 import com.xingfeng.opengles.chapter23.chapter2314.ParticleDataConstant.RADIS
 import com.xingfeng.opengles.util.*
@@ -16,6 +26,7 @@ import com.xingfeng.opengles.util.Constant.initTexture
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -93,12 +104,36 @@ class GL2314SurfaceView(context: Context) : GLSurfaceView(context) {
             }
 
             MotionEvent.ACTION_UP -> {
-
+                flag=false
             }
         }
 
-        mPreviousX = x
-        mPreviousY = y
+        //设置新的观察目标点XZ坐标
+
+        //设置新的观察目标点XZ坐标
+        cx = (Math.sin(direction.toDouble()) * Offset).toFloat() //观察目标点x坐标
+
+        cz = (Math.cos(direction.toDouble()) * Offset).toFloat() //观察目标点z坐标
+
+        //重新计算Up向量
+        //重新计算Up向量
+        ux = -cx //观察目标点x坐标
+
+        uy = Math.abs((cx * tx + cz * tz - cx * cx - cz * cz) / (ty - cy)) //观察目标点y坐标
+
+        uz = -cz //观察目标点z坐标
+
+        //计算粒子的朝向
+        //计算粒子的朝向
+        for (i in 0 until count) {
+            SceneRenderer.fps.get(i).calculateBillboardDirection()
+        }
+        SceneRenderer.fps.sort()
+        //重新设置摄像机的位置
+        //重新设置摄像机的位置
+        MatrixState.setCamera(cx, cy, cz, tx, ty, tz, ux, uy, uz)
+        //根据粒子与摄像机的距离进行排序
+        //根据粒子与摄像机的距离进行排序
         return true
     }
 
@@ -106,41 +141,43 @@ class GL2314SurfaceView(context: Context) : GLSurfaceView(context) {
     class SceneRenderer(view: View) : Renderer {
         // 摄像机x坐标
         companion object {
+             var count = 0
             var cx: Float = 0.0f
 
+
+            //摄像机y坐标
+            var cy: Float = 18.0f
+
             //摄像机z坐标
-            var cz: Float = 0.0f
+            var cz: Float = 20.0f
+
+
+            //观察目标点x坐标
+            var tx: Float = 0.0f
+
+            //观察目标点y坐标
+            var ty: Float = 5.0f
+
+            //观察目标点z坐标
+            var tz: Float = 0.0f
+            var ux: Float = -cx
+
+            //观察目标点y坐标
+            var uy = Math.abs((cx * tx + cz * tz - cz * cz) / (ty - cy));
+
+            //观察目标点z坐标
+            var uz = -cz
+
+            var fps = mutableListOf<ParticleSystem>()
         }
 
 
-        //摄像机y坐标
-        private var cy: Float = 0.0f
-
-
-        //观察目标点x坐标
-        private var tx: Float = 0.0f
-
-        //观察目标点y坐标
-        private var ty: Float = 0.0f
-
-        //观察目标点z坐标
-        private var tz: Float = 0.0f
-        private var ux: Float = -cx
-
-        //观察目标点y坐标
-        private var uy = Math.abs((cx * tx + cz * tz - cz * cz) / (ty - cy));
-
-        //观察目标点z坐标
-        private var uz = -cz
-
         private var mView: View = view
-        private var count = 0
         private var timeStart = System.nanoTime()
 
         lateinit var wallsForDraw: WallsForwDraw
-        lateinit var brazier: LoadedObjectVertexNormalTexture
+        lateinit var brazier: LoadedObjectVertexNormalTexture7
 
-        var fps = mutableListOf<ParticleSystem>()
         var fpfd = emptyArray<ParticleForDraw?>()
         var textureId = 0
 
@@ -150,6 +187,8 @@ class GL2314SurfaceView(context: Context) : GLSurfaceView(context) {
 
         //系统火盆分配的纹理id
         private var textureIdbrazier = 0
+
+        private var countt = 0
 
         override fun onSurfaceCreated(gl: GL10, config: EGLConfig) {
             //初始化纹理坐标
@@ -165,7 +204,7 @@ class GL2314SurfaceView(context: Context) : GLSurfaceView(context) {
             //创建粒子系统
             //创建粒子系统
             for (i in 0 until count) {
-                ParticleDataConstant.CURR_INDEX = i
+                CURR_INDEX = i
                 fpfd[i] = ParticleForDraw(mView, RADIS.get(CURR_INDEX))
                 //创建对象,将火焰的初始位置传给构造器
                 fps.add(ParticleSystem(ParticleDataConstant.positionFireXZ[i][0], ParticleDataConstant.positionFireXZ[i][1], fpfd[i], ParticleDataConstant.COUNT.get(i)))
@@ -173,7 +212,7 @@ class GL2314SurfaceView(context: Context) : GLSurfaceView(context) {
             wallsForDraw = WallsForwDraw(mView)
             //加载要绘制的物体
             //加载要绘制的物体
-            brazier = LoadUtil.loadFromFile("chapter301/chapter301.14/brazier.obj", mView.getResources(), mView)
+            brazier = LoadUtil.loadFromFile7("chapter301/chapter301.14/brazier.obj", mView.getResources(), mView)
             //设置屏幕背景色RGBA
             //设置屏幕背景色RGBA
             GLES30.glClearColor(0.6f, 0.3f, 0.0f, 1.0f)
@@ -182,25 +221,13 @@ class GL2314SurfaceView(context: Context) : GLSurfaceView(context) {
             GLES30.glEnable(GLES30.GL_DEPTH_TEST)
             //初始化纹理
             //初始化纹理
-            textureIdFire = Constant.initTexture(mView.resources, R.drawable.fire)
+            textureIdFire = initTexture(mView.resources, R.drawable.fire)
             //关闭背面剪裁
             //关闭背面剪裁
             GLES30.glDisable(GLES30.GL_CULL_FACE)
         }
 
         override fun onDrawFrame(gl: GL10) {
-            when (count) {
-                19 -> {
-                    var timeEnd = System.nanoTime()
-
-                    //计算帧速率
-                    var ps = (1000000000.0 / ((timeEnd - timeStart) / 20));
-                    Log.i("DEBUG_TEST", "帧率是 pss = $ps")
-                    count = 0
-                    timeStart = timeEnd
-                }
-            }
-
             //清除深度缓冲与颜色缓冲
 
             //清除深度缓冲与颜色缓冲

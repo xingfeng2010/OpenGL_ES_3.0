@@ -69,7 +69,7 @@ class ParticleSystem constructor(positionx: Float, positionz: Float, fpfd: Parti
     lateinit var points //粒子对应的所有顶点数据数组
             : FloatArray
 
-    fun ParticleSystem(positionx: Float, positionz: Float, fpfd: ParticleForDraw, count: Int) { //构造器
+    init {
         positionX = positionx //初始化此粒子系统的绘制位置x坐标
         positionZ = positionz //初始化此粒子系统的绘制位置y坐标
         startColor = START_COLOR.get(CURR_INDEX) //初始化粒子起始颜色
@@ -90,7 +90,7 @@ class ParticleSystem constructor(positionx: Float, positionz: Float, fpfd: Parti
         halfSize = RADIS.get(CURR_INDEX) //初始化此粒子系统的粒子半径
         this.fpfd = fpfd //初始化粒子群的绘制者
         points = initPoints(count) //初始化粒子所对应的所有顶点数据数组
-        fpfd.initVertexData(points) //调用初始化顶点坐标与纹理坐标数据的方法
+        fpfd?.initVertexData(points) //调用初始化顶点坐标与纹理坐标数据的方法
         object : Thread() {
             //创建粒子的更新线程
             override fun run() //重写run方法
