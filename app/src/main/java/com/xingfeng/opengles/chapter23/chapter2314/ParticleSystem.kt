@@ -18,8 +18,9 @@ import com.xingfeng.opengles.chapter23.chapter2314.ParticleDataConstant.Y_RANGE
 import com.xingfeng.opengles.chapter23.chapter2314.ParticleDataConstant.lock
 
 import com.xingfeng.opengles.util.MatrixState
-
-
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class ParticleSystem constructor(positionx: Float, positionz: Float, fpfd: ParticleForDraw?, count: Int) : Comparable<ParticleSystem>{
@@ -91,20 +92,16 @@ class ParticleSystem constructor(positionx: Float, positionz: Float, fpfd: Parti
         this.fpfd = fpfd //初始化粒子群的绘制者
         points = initPoints(count) //初始化粒子所对应的所有顶点数据数组
         fpfd?.initVertexData(points) //调用初始化顶点坐标与纹理坐标数据的方法
-        object : Thread() {
-            //创建粒子的更新线程
-            override fun run() //重写run方法
-            {
-                while (flag) {
-                    update() //调用update方法更新粒子状态
-                    try {
-                        sleep(sleepSpan.toLong()) //休眠一定的时间
-                    } catch (e: InterruptedException) {
-                        e.printStackTrace() //打印异常信息
-                    }
+        CoroutineScope(Dispatchers.IO).launch {
+            while (flag) {
+                update() //调用update方法更新粒子状态
+                try {
+                    Thread.sleep(sleepSpan.toLong()) //休眠一定的时间
+                } catch (e: InterruptedException) {
+                    e.printStackTrace() //打印异常信息
                 }
             }
-        }.start() //启动线程
+        }
     }
 
     fun initPoints(zcount: Int): FloatArray //初始化粒子所对应的所有顶点数据的方法
