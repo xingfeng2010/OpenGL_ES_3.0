@@ -97,7 +97,10 @@ public class MatrixState
     //设置摄像机
     static ByteBuffer llbb= ByteBuffer.allocateDirect(3*4);
     public static FloatBuffer cameraFB;
-    static float[] cameraLocation = new float[3];//摄像机位置
+    public static float[] cameraLocation = new float[3];//摄像机位置
+
+    //摄像机位置
+    public static float cx,cy,cz;
     //设置摄像机的方法
     public static void setCamera
     (

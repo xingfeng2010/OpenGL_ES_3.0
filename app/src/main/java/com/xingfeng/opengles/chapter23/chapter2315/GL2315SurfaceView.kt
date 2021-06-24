@@ -1,6 +1,5 @@
-package com.xingfeng.opengles.chapter23.chapter2314
+package com.xingfeng.opengles.chapter23.chapter2315
 
-import android.R.attr
 import android.app.Activity
 import android.content.Context
 import android.opengl.GLES30
@@ -19,8 +18,12 @@ import com.xingfeng.opengles.chapter23.chapter2314.GL2314SurfaceView.SceneRender
 import com.xingfeng.opengles.chapter23.chapter2314.GL2314SurfaceView.SceneRenderer.Companion.ux
 import com.xingfeng.opengles.chapter23.chapter2314.GL2314SurfaceView.SceneRenderer.Companion.uy
 import com.xingfeng.opengles.chapter23.chapter2314.GL2314SurfaceView.SceneRenderer.Companion.uz
+import com.xingfeng.opengles.chapter23.chapter2314.ParticleDataConstant
 import com.xingfeng.opengles.chapter23.chapter2314.ParticleDataConstant.CURR_INDEX
 import com.xingfeng.opengles.chapter23.chapter2314.ParticleDataConstant.RADIS
+import com.xingfeng.opengles.chapter23.chapter2314.ParticleForDraw
+import com.xingfeng.opengles.chapter23.chapter2314.ParticleSystem
+import com.xingfeng.opengles.chapter23.chapter2314.WallsForwDraw
 import com.xingfeng.opengles.util.*
 import com.xingfeng.opengles.util.Constant.initTexture
 import kotlinx.coroutines.CoroutineScope
@@ -31,7 +34,7 @@ import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
 
-class GL2314SurfaceView(context: Context) : GLSurfaceView(context) {
+class GL2315SurfaceView(context: Context) : GLSurfaceView(context) {
     private var mRenderer: SceneRenderer
 
     private var Offset = 20.0f
@@ -54,7 +57,7 @@ class GL2314SurfaceView(context: Context) : GLSurfaceView(context) {
 
     init {
         this.setEGLContextClientVersion(3)
-        mRenderer = SceneRenderer(this@GL2314SurfaceView)
+        mRenderer = SceneRenderer(this@GL2315SurfaceView)
         setRenderer(mRenderer)
         renderMode = RENDERMODE_CONTINUOUSLY
 
@@ -74,13 +77,13 @@ class GL2314SurfaceView(context: Context) : GLSurfaceView(context) {
                 flag = true
                 CoroutineScope(Dispatchers.IO).launch {
                     while (flag) {
-                        if (x > WIDTH / 4 && x < 3 * WIDTH / 4 && attr.y > 0 && attr.y < HEIGHT / 2) {    //向前
+                        if (x > WIDTH / 4 && x < 3 * WIDTH / 4 && y > 0 && y < HEIGHT / 2) {    //向前
                             if (Math.abs(Offset - 0.5f) > 25 || Math.abs(Offset - 0.5f) < 15) {
 
                             } else {
                                 Offset = Offset - 0.5f
                             }
-                        } else if (x > WIDTH / 4 && x < 3 * WIDTH / 4 && attr.y > HEIGHT / 2 && attr.y < HEIGHT) {    //向后
+                        } else if (x > WIDTH / 4 && x < 3 * WIDTH / 4 && y > HEIGHT / 2 && y < HEIGHT) {    //向后
                             if (Math.abs(Offset + 0.5f) > 25 || Math.abs(Offset + 0.5f) < 15) {
 
                             } else {
@@ -168,7 +171,7 @@ class GL2314SurfaceView(context: Context) : GLSurfaceView(context) {
             //观察目标点z坐标
             var uz = -cz
 
-            var fps = mutableListOf<ParticleSystem>()
+            var fps = mutableListOf<PointParticleSystem>()
         }
 
 
@@ -178,7 +181,7 @@ class GL2314SurfaceView(context: Context) : GLSurfaceView(context) {
         lateinit var wallsForDraw: WallsForwDraw
         lateinit var brazier: LoadedObjectVertexNormalTexture7
 
-        var fpfd = emptyArray<ParticleForDraw?>()
+        var fpfd = emptyArray<PointParticleForDraw?>()
         var textureId = 0
 
 
@@ -199,20 +202,20 @@ class GL2314SurfaceView(context: Context) : GLSurfaceView(context) {
             }
             textureIdbrazier = initTexture(mView.resources, R.drawable.brazier)
             count = ParticleDataConstant.START_COLOR.size
-            fpfd = arrayOfNulls<ParticleForDraw>(count) //4组绘制着，4种颜色
+            fpfd = arrayOfNulls<PointParticleForDraw>(count) //4组绘制着，4种颜色
 
             //创建粒子系统
             //创建粒子系统
             for (i in 0 until count) {
                 CURR_INDEX = i
-                fpfd[i] = ParticleForDraw(mView, RADIS.get(CURR_INDEX))
+                fpfd[i] = PointParticleForDraw(mView, RADIS.get(CURR_INDEX))
                 //创建对象,将火焰的初始位置传给构造器
-                fps.add(ParticleSystem(ParticleDataConstant.positionFireXZ[i][0], ParticleDataConstant.positionFireXZ[i][1], fpfd[i], ParticleDataConstant.COUNT.get(i)))
+                fps.add(PointParticleSystem(ParticleDataConstant.positionFireXZ[i][0], ParticleDataConstant.positionFireXZ[i][1], fpfd[i], ParticleDataConstant.COUNT.get(i)))
             }
             wallsForDraw = WallsForwDraw(mView)
             //加载要绘制的物体
             //加载要绘制的物体
-            brazier = LoadUtil.loadFromFile7("chapter301/chapter301.14/brazier.obj", mView.getResources(), mView)
+            brazier = LoadUtil.loadFromFile7("chapter301/chapter301.15/brazier.obj", mView.getResources(), mView)
             //设置屏幕背景色RGBA
             //设置屏幕背景色RGBA
             GLES30.glClearColor(0.6f, 0.3f, 0.0f, 1.0f)
@@ -235,7 +238,7 @@ class GL2314SurfaceView(context: Context) : GLSurfaceView(context) {
             MatrixState.pushMatrix()
             //绘制墙体
             //绘制墙体
-            wallsForDraw.drawSelf()
+//            wallsForDraw.drawSelf()
             MatrixState.translate(0f, 2.5f, 0f)
             for (i in 0 until count) {
                 MatrixState.pushMatrix()

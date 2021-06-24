@@ -65,9 +65,9 @@ public class LoadedObjectVertexNormalTexture7
     public void initShader(View mv)
     {
         //加载顶点着色器的脚本内容
-        mVertexShader=ShaderUtil.loadFromAssetsFile("chapter301/chapter301.14/vertex_brazier.glsl", mv.getResources());
+        mVertexShader=ShaderUtil.loadFromAssetsFile(Constant.OBJ_VER_PATH, mv.getResources());
         //加载片元着色器的脚本内容
-        mFragmentShader=ShaderUtil.loadFromAssetsFile("chapter301/chapter301.14/frag_brazier.glsl", mv.getResources());
+        mFragmentShader=ShaderUtil.loadFromAssetsFile(Constant.OBJ_FRAG_PATH, mv.getResources());
         //基于顶点着色器与片元着色器创建程序
         mProgram = ShaderUtil.createProgram(mVertexShader, mFragmentShader);
         //获取程序中总变换矩阵引用
