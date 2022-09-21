@@ -8,12 +8,16 @@
 
     <application
         android:allowBackup="true"
+        android:testOnly="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <activity android:name=".chapter27.chapter278.Chapter278Activity"/>
+        <activity android:name=".chapter27.chapter271.Chapter271Activity"/>
+        <activity android:name=".chapter27.Chapter27Activity"/>
         <activity android:name=".chapter5.Chapter5Activity" />
         <activity android:name=".chapter5.chapter516.Chapter516Activity"/>
         <activity android:name=".chapter5.chapter515.Chapter515Activity"/>

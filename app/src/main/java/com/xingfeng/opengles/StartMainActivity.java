@@ -7,6 +7,7 @@ import com.xingfeng.opengles.chapter10.Chapter10Activity;
 import com.xingfeng.opengles.chapter20.Chapter20Activity;
 import com.xingfeng.opengles.chapter22.Chapter22Activity;
 import com.xingfeng.opengles.chapter23.Chapter23Activity;
+import com.xingfeng.opengles.chapter27.Chapter27Activity;
 import com.xingfeng.opengles.chapter3.Chapter3Activity;
 import com.xingfeng.opengles.chapter5.Chapter5Activity;
 import com.xingfeng.opengles.chapter6.Chapter6Activity;
@@ -21,7 +22,8 @@ public class StartMainActivity extends BaseListActivity{
             Chapter10Activity.class,
             Chapter20Activity.class,
             Chapter22Activity.class,
-            Chapter23Activity.class
+            Chapter23Activity.class,
+            Chapter27Activity.class
     };
 
     protected String[] classDescription = new String[] {
@@ -32,7 +34,8 @@ public class StartMainActivity extends BaseListActivity{
             "纹理混合",
             "缓冲区对象",
             "顶点着色器",
-            "片元着色器"
+            "片元着色器",
+            "JBullet-3D物理引擎"
     };
 
 
