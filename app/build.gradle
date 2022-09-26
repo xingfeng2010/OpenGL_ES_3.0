@@ -5,6 +5,10 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+ext {
+        native_sdk_path = rootDir.getAbsolutePath().replace('\\','/') + "/app"
+}
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -15,6 +19,16 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        externalNativeBuild {
+            cmake {
+                cppFlags ''
+            }
+        }
+        ndk {
+            //设置支持的SO库架构
+            abiFilters 'armeabi-v7a'
+        }
     }
     buildTypes {
         release {
@@ -47,6 +61,12 @@ android {
     buildscript {
         tasks.withType(JavaCompile) {//解决编码错误: 编码UTF-8的不可映射字
             options.encoding = "UTF-8"
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
         }
     }
 }

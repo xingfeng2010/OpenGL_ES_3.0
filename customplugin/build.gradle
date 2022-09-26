@@ -1,5 +1,4 @@
 apply plugin: 'groovy'
-apply plugin: 'maven'
 
 /**定义工件的group、name 和 version*/
 group = 'com.changan.customplugin'
@@ -20,13 +19,4 @@ dependencies {
     implementation 'org.ow2.asm:asm:7.1'
     implementation 'org.ow2.asm:asm-util:7.1'
     implementation 'org.ow2.asm:asm-commons:7.1'
-}
-
-uploadArchives {
-    repositories {
-        /**配置Maven部署器，将工件上传到本地目录，这里是放到与该项目同级目录的repo目录下*/
-        mavenDeployer {
-            repository(url: "file://$projectDir/../repo")
-        }
-    }
 }
