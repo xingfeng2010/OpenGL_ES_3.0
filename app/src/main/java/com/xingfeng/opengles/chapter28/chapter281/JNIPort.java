@@ -7,7 +7,7 @@ public class JNIPort
 {
    static
    {
-      System.loadLibrary("BNbullet");
+      System.loadLibrary("anative");
    }
    public static native void step();
    public static native void onSurfaceChanged(int width,int height);

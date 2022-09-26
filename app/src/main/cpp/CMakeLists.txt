@@ -44,7 +44,20 @@ set(OPENGL_LIB GLESv2)
 # Declares and names the project.
 
 
-ADD_LIBRARY(anative SHARED ${SRC_DIR_LIST})
+ADD_LIBRARY(anative SHARED
+        ${SRC_DIR_LIST}
+        myEncapsulation/FileUtil.cpp
+        myEncapsulation/MatrixState.cpp
+        myEncapsulation/ShaderUtil.cpp
+        myEncapsulation/TexCuboid.cpp
+        myEncapsulation/TexPlane.cpp
+        myEncapsulation/geometry/TextureRect.cpp
+        myEncapsulation/geometry/TexturePlane.cpp
+        helloapp/native-lib.cpp
+        helloapp/RenderJNI.cpp
+        chapter1/main.cpp
+        chapter1/jni_code.c
+        )
 
 
 find_library( # Sets the name of the path variable.

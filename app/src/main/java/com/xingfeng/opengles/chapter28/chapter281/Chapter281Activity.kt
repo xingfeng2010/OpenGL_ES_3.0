@@ -1,4 +1,4 @@
-package com.xingfeng.opengles.chapter28.chapter281;
+package com.xingfeng.opengles.chapter28.chapter281
 
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -39,7 +39,7 @@ open class Chapter281Activity : AppCompatActivity() {
         mView!!.requestFocus() //获取焦点
         mView!!.setFocusableInTouchMode(true) //设置为可触控
         setContentView(mView)
-        //JNIPort.nativeSetAssetManager(this.assets) //初始化
+        JNIPort.nativeSetAssetManager(this.assets) //初始化
     }
 
     override fun onPause() {

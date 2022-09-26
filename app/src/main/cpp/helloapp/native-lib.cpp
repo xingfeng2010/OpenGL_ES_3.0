@@ -2,7 +2,7 @@
 #include <string>
 #include <android/log.h>
 #include <stdio.h>
-#include "src/btBulletDynamicsCommon.h"
+#include "btBulletDynamicsCommon.h"
 
 #define  LOG_TAG  "test"
 
