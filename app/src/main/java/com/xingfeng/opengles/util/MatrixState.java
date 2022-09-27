@@ -60,6 +60,14 @@ public class MatrixState
         Matrix.setRotateM(currMatrix, 0, 0, 1, 0, 0);
     }
 
+    //插入新矩阵
+    public static void setMatrix(float[] mIn)
+    {
+        float[] temp=new float[16];
+        Matrix.multiplyMM(temp, 0, currMatrix, 0, mIn, 0);
+        currMatrix=temp;
+    }
+
     //将当前变换矩阵存入栈中
     public static void pushMatrix()
     {
