@@ -206,7 +206,7 @@ class GL291SurfaceView(context: Context) : GLSurfaceView(context) {
             MatrixState.setCamera(
                 (2.5 * Math.sin(yAngle)).toFloat(),   //人眼位置的X
                 0.05f,    //人眼位置的Y
-                (2.5 * Math.cos(yAngle)).toFloat(),   //人眼位置的Z
+                (2.5 * Math.cos(yAngle)).toFloat() ,   //人眼位置的Z
                 0f,    //人眼球看的点X
                 0.03f,   //人眼球看的点Y
                 0f,   //人眼球看的点Z

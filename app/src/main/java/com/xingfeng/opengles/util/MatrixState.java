@@ -206,4 +206,18 @@ public class MatrixState
         lightPositionFBSun.put(lightLocationSun);
         lightPositionFBSun.position(0);
     }
+
+    //获取摄像机投影组合矩阵
+    public static float[] getVPMatrix()
+    {
+        float[] mVPMatrix=new float[16];
+        Matrix.multiplyMM(mVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
+        return mVPMatrix;
+    }
+
+    //获取基本变换矩阵
+    public static float[] getmMatrix()
+    {
+        return currMatrix;
+    }
 }
