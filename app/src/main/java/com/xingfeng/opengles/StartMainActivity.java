@@ -6,6 +6,7 @@ import android.util.Log;
 import com.xingfeng.opengles.chapter10.Chapter10Activity;
 import com.xingfeng.opengles.chapter20.Chapter20Activity;
 import com.xingfeng.opengles.chapter211.Chapter211Activity;
+import com.xingfeng.opengles.chapter212.Chapter212Activity;
 import com.xingfeng.opengles.chapter22.Chapter22Activity;
 import com.xingfeng.opengles.chapter23.Chapter23Activity;
 import com.xingfeng.opengles.chapter27.Chapter27Activity;
@@ -30,7 +31,8 @@ public class StartMainActivity extends BaseListActivity{
             Chapter27Activity.class,
             Chapter28Activity.class,
             Chapter29Activity.class,
-            Chapter211Activity.class
+            Chapter211Activity.class,
+            Chapter212Activity.class
     };
 
     protected String[] classDescription = new String[] {
@@ -45,7 +47,8 @@ public class StartMainActivity extends BaseListActivity{
             "JBullet-3D物理引擎",
             "Bullet-3D物理引擎",
             "人体骨骼动画",
-            "几何体实例渲染"
+            "几何体实例渲染",
+            "12章-杂项"
     };
 
 

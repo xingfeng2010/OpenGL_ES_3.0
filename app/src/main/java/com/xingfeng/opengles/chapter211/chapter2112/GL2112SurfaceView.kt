@@ -28,7 +28,7 @@ internal class GL2112SurfaceView(context: Context?) : GLSurfaceView(context) {
     var textureJBId //小草颜色渐变纹理id
             = 0
     var cAngle = 0f //摄像机转动的角度
-    var num = 40000f //小草的总棵数
+    var num = 400000f //小草的总棵数
     var r = Math.sqrt(num.toDouble()).toFloat() / 4 - 1 //摄像机到目标点的距离，即摄像机旋转的半径
 
     //摄像机目标点的坐标
